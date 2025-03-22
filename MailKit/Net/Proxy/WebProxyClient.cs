@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ namespace MailKit.Net.Proxy
 		/// </remarks>
 		/// <param name="proxy">The web proxy.</param>
 		/// <exception cref="ArgumentNullException">
-		/// <paramref name="proxy"/> is <c>null</c>.
+		/// <paramref name="proxy"/> is <see langword="null" />.
 		/// </exception>
 		public WebProxyClient (IWebProxy proxy) : base ("System", 0)
 		{
@@ -78,23 +78,55 @@ namespace MailKit.Net.Proxy
 
 		static NetworkCredential GetNetworkCredential (ICredentials credentials, Uri uri)
 		{
+			if (credentials == null)
+				return null;
+
 			if (credentials is NetworkCredential network)
 				return network;
 
 			return credentials.GetCredential (uri, "Basic");
 		}
 
-		static ProxyClient GetProxyClient (Uri proxyUri, ICredentials credentials)
+		internal static ProxyClient GetProxyClient (Uri proxyUri, ICredentials credentials)
 		{
 			var credential = GetNetworkCredential (credentials, proxyUri);
 
-			if (proxyUri.Scheme.Equals ("https", StringComparison.OrdinalIgnoreCase))
-				return new HttpsProxyClient (proxyUri.Host, proxyUri.Port, credential);
+			if (proxyUri.Scheme.Equals ("https", StringComparison.OrdinalIgnoreCase)) {
+				if (credential != null)
+					return new HttpsProxyClient (proxyUri.Host, proxyUri.Port, credential);
 
-			if (proxyUri.Scheme.Equals ("http", StringComparison.OrdinalIgnoreCase))
-				return new HttpProxyClient (proxyUri.Host, proxyUri.Port, credential);
+				return new HttpsProxyClient (proxyUri.Host, proxyUri.Port);
+			}
 
-			throw new NotImplementedException ($"The default system proxy does not support {proxyUri.Scheme}.");
+			if (proxyUri.Scheme.Equals ("http", StringComparison.OrdinalIgnoreCase)) {
+				if (credential != null)
+					return new HttpProxyClient (proxyUri.Host, proxyUri.Port, credential);
+
+				return new HttpProxyClient (proxyUri.Host, proxyUri.Port);
+			}
+
+			if (proxyUri.Scheme.Equals ("socks4", StringComparison.OrdinalIgnoreCase)) {
+				if (credential != null)
+					return new Socks4Client (proxyUri.Host, proxyUri.Port, credential);
+
+				return new Socks4Client (proxyUri.Host, proxyUri.Port);
+			}
+
+			if (proxyUri.Scheme.Equals ("socks4a", StringComparison.OrdinalIgnoreCase)) {
+				if (credential != null)
+					return new Socks4aClient (proxyUri.Host, proxyUri.Port, credential);
+
+				return new Socks4aClient (proxyUri.Host, proxyUri.Port);
+			}
+
+			if (proxyUri.Scheme.Equals ("socks5", StringComparison.OrdinalIgnoreCase)) {
+				if (credential != null)
+					return new Socks5Client (proxyUri.Host, proxyUri.Port, credential);
+
+				return new Socks5Client (proxyUri.Host, proxyUri.Port);
+			}
+
+			throw new NotSupportedException ($"The default system proxy does not support {proxyUri.Scheme}.");
 		}
 
 		/// <summary>
@@ -108,7 +140,7 @@ namespace MailKit.Net.Proxy
 		/// <param name="port">The target server port.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="host"/> is <c>null</c>.
+		/// <paramref name="host"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="port"/> is not between <c>0</c> and <c>65535</c>.
@@ -132,7 +164,7 @@ namespace MailKit.Net.Proxy
 			var targetUri = GetTargetUri (host, port);
 			var proxyUri = proxy.GetProxy (targetUri);
 
-			if (proxyUri is null) {
+			if (proxyUri is null || proxy.IsBypassed (targetUri)) {
 				// Note: if the proxy URI is null, then it means that the proxy should be bypassed.
 				var socket = SocketUtils.Connect (host, port, LocalEndPoint, cancellationToken);
 				return new NetworkStream (socket, true);
@@ -154,7 +186,7 @@ namespace MailKit.Net.Proxy
 		/// <param name="port">The target server port.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="host"/> is <c>null</c>.
+		/// <paramref name="host"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="port"/> is not between <c>0</c> and <c>65535</c>.

@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -73,7 +73,7 @@ namespace MailKit {
 		/// created by any of the
 		/// <a href="Overload_MailKit_Net_Imap_ImapFolder_Thread.htm">Thread</a> or
 		/// <a href="Overload_MailKit_Net_Imap_ImapFolder_ThreadAsync.htm">ThreadAsync</a>
-		/// methods will always be <c>null</c>.</note>
+		/// methods will always be <see langword="null" />.</note>
 		/// </remarks>
 		/// <value>The message summary.</value>
 		public IMessageSummary Message {
@@ -84,7 +84,7 @@ namespace MailKit {
 		/// Gets the unique identifier of the message.
 		/// </summary>
 		/// <remarks>
-		/// The unique identifier may be <c>null</c> if the message is missing from the
+		/// The unique identifier may be <see langword="null" /> if the message is missing from the
 		/// <see cref="IMailFolder"/> or from the list of messages provided to the
 		/// <see cref="MessageThreader"/>.
 		/// </remarks>

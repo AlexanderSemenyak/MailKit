@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ namespace MailKit {
 		/// Get the quota root.
 		/// </summary>
 		/// <remarks>
-		/// Gets the quota root. If the quota root is <c>null</c>, then
+		/// Gets the quota root. If the quota root is <see langword="null" />, then
 		/// it suggests that the folder does not have a quota.
 		/// </remarks>
 		/// <example>

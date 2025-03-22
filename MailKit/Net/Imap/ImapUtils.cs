@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -244,11 +244,11 @@ namespace MailKit.Net.Imap {
 		/// <param name="builder">The string builder.</param>
 		/// <param name="indexes">The indexes.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="engine"/> is <c>null</c>.</para>
+		/// <para><paramref name="engine"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="builder"/> is <c>null</c>.</para>
+		/// <para><paramref name="builder"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="indexes"/> is <c>null</c>.</para>
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// One or more of the indexes has a negative value.
@@ -316,9 +316,9 @@ namespace MailKit.Net.Imap {
 		/// <param name="engine">The IMAP engine.</param>
 		/// <param name="indexes">The indexes.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="engine"/> is <c>null</c>.</para>
+		/// <para><paramref name="engine"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="indexes"/> is <c>null</c>.</para>
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// One or more of the indexes has a negative value.
@@ -447,7 +447,7 @@ namespace MailKit.Net.Imap {
 		/// <summary>
 		/// Determines whether the specified mailbox is the Inbox.
 		/// </summary>
-		/// <returns><c>true</c> if the specified mailbox name is the Inbox; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the specified mailbox name is the Inbox; otherwise, <see langword="false" />.</returns>
 		/// <param name="mailboxName">The mailbox name.</param>
 		public static bool IsInbox (string mailboxName)
 		{
@@ -467,10 +467,10 @@ namespace MailKit.Net.Imap {
 			case ImapTokenType.Atom:
 				encodedName = (string) token.Value;
 
-				// Note: Exchange apparently doesn't quote folder names that contain tabs.
+				// Note: Exchange (Office365 and potentially 2016/2019/other versions) has a bug where it doesn't quote folder names that contain CTRL characters (including tab).
 				//
 				// See https://github.com/jstedfast/MailKit/issues/945 for details.
-				if (engine.QuirksMode == ImapQuirksMode.Exchange) {
+				if (token.Type == ImapTokenType.Atom && engine.QuirksMode == ImapQuirksMode.Exchange) {
 					var line = engine.ReadLine (cancellationToken);
 
 					// unget the \r\n sequence
@@ -502,10 +502,10 @@ namespace MailKit.Net.Imap {
 			case ImapTokenType.Atom:
 				encodedName = (string) token.Value;
 
-				// Note: Exchange apparently doesn't quote folder names that contain tabs.
+				// Note: Exchange (Office365 and potentially 2016/2019/other versions) has a bug where it doesn't quote folder names that contain CTRL characters (including tab).
 				//
 				// See https://github.com/jstedfast/MailKit/issues/945 for details.
-				if (engine.QuirksMode == ImapQuirksMode.Exchange) {
+				if (token.Type == ImapTokenType.Atom && engine.QuirksMode == ImapQuirksMode.Exchange) {
 					var line = await engine.ReadLineAsync (cancellationToken).ConfigureAwait (false);
 
 					// unget the \r\n sequence
@@ -642,8 +642,8 @@ namespace MailKit.Net.Imap {
 		/// </summary>
 		/// <param name="engine">The IMAP engine.</param>
 		/// <param name="list">The list of folders to be populated.</param>
-		/// <param name="isLsub"><c>true</c> if it is an LSUB response; otherwise, <c>false</c>.</param>
-		/// <param name="returnsSubscribed"><c>true</c> if the LIST response is expected to return \Subscribed flags; otherwise, <c>false</c>.</param>
+		/// <param name="isLsub"><see langword="true" /> if it is an LSUB response; otherwise, <see langword="false" />.</param>
+		/// <param name="returnsSubscribed"><see langword="true" /> if the LIST response is expected to return \Subscribed flags; otherwise, <see langword="false" />.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		public static void ParseFolderList (ImapEngine engine, List<ImapFolder> list, bool isLsub, bool returnsSubscribed, CancellationToken cancellationToken)
 		{
@@ -728,8 +728,8 @@ namespace MailKit.Net.Imap {
 		/// </summary>
 		/// <param name="engine">The IMAP engine.</param>
 		/// <param name="list">The list of folders to be populated.</param>
-		/// <param name="isLsub"><c>true</c> if it is an LSUB response; otherwise, <c>false</c>.</param>
-		/// <param name="returnsSubscribed"><c>true</c> if the LIST response is expected to return \Subscribed flags; otherwise, <c>false</c>.</param>
+		/// <param name="isLsub"><see langword="true" /> if it is an LSUB response; otherwise, <see langword="false" />.</param>
+		/// <param name="returnsSubscribed"><see langword="true" /> if the LIST response is expected to return \Subscribed flags; otherwise, <see langword="false" />.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		public static async Task ParseFolderListAsync (ImapEngine engine, List<ImapFolder> list, bool isLsub, bool returnsSubscribed, CancellationToken cancellationToken)
 		{
@@ -1693,23 +1693,31 @@ namespace MailKit.Net.Imap {
 			case ImapTokenType.Atom: // Note: Technically, we should never get an Atom here, but if we do, we'll treat it as a QString.
 			case ImapTokenType.QString:
 			case ImapTokenType.Literal:
-				if (engine.QuirksMode == ImapQuirksMode.GMail && token.Type != ImapTokenType.Literal) {
+				if (engine.QuirksMode is ImapQuirksMode.GMail or ImapQuirksMode.QQMail or ImapQuirksMode.Yandex && token.Type != ImapTokenType.Literal) {
 					// Note: GMail's IMAP server implementation breaks when it encounters nested multiparts with the same
 					// boundary and returns a BODYSTRUCTURE like the example in https://github.com/jstedfast/MailKit/issues/205
-					// or like the example in https://github.com/jstedfast/MailKit/issues/777:
+					// or like the example in https://github.com/jstedfast/MailKit/issues/777. There's also an issue with BODY
+					// responses like the one in https://github.com/jstedfast/MailKit/issues/1841.
 					//
 					// ("ALTERNATIVE" ("BOUNDARY" "==alternative_xad5934455aeex") NIL NIL)
 					// or
 					// ("RELATED" NIL ("ATTACHMENT" NIL) NIL)
+					// or
+					// ("ALTERNATIVE")
 					//
-					// Check if the next token is either a '(' or NIL. If it is '(', then that would indicate the start of
-					// the Content-Type parameter list. If it is NIL, then it would signify that the Content-Type has no
-					// parameters.
+					// Check if the next token is either a '(', ')' or NIL.
+					//
+					// If it is '(', then that would indicate the start of the Content-Type parameter list.
+					// If it is ')', then that would indicate a BODY response without a Content-Type parameter list.
+					// If it is NIL, then it would signify that the Content-Type has no parameters.
+					//
+					// Note: Yandex also has this problem. See https://github.com/jstedfast/MailKit/issues/1861
+					// As does QQMail: https://github.com/jstedfast/MailKit/issues/1076
 
 					// Peek at the next token to see what we've got. If we get a '(' or NIL, then treat this as a multipart.
 					nextToken = engine.PeekToken (cancellationToken);
 
-					if (nextToken.Type == ImapTokenType.OpenParen || nextToken.Type == ImapTokenType.Nil) {
+					if (nextToken.Type == ImapTokenType.OpenParen || nextToken.Type == ImapTokenType.CloseParen || nextToken.Type == ImapTokenType.Nil) {
 						// Unget the multipart subtype.
 						engine.Stream.UngetToken (token);
 
@@ -1775,23 +1783,31 @@ namespace MailKit.Net.Imap {
 			case ImapTokenType.Atom: // Note: Technically, we should never get an Atom here, but if we do, we'll treat it as a QString.
 			case ImapTokenType.QString:
 			case ImapTokenType.Literal:
-				if (engine.QuirksMode == ImapQuirksMode.GMail && token.Type != ImapTokenType.Literal) {
+				if (engine.QuirksMode is ImapQuirksMode.GMail or ImapQuirksMode.QQMail or ImapQuirksMode.Yandex && token.Type != ImapTokenType.Literal) {
 					// Note: GMail's IMAP server implementation breaks when it encounters nested multiparts with the same
 					// boundary and returns a BODYSTRUCTURE like the example in https://github.com/jstedfast/MailKit/issues/205
-					// or like the example in https://github.com/jstedfast/MailKit/issues/777:
+					// or like the example in https://github.com/jstedfast/MailKit/issues/777. There's also an issue with BODY
+					// responses like the one in https://github.com/jstedfast/MailKit/issues/1841.
 					//
 					// ("ALTERNATIVE" ("BOUNDARY" "==alternative_xad5934455aeex") NIL NIL)
 					// or
 					// ("RELATED" NIL ("ATTACHMENT" NIL) NIL)
+					// or
+					// ("ALTERNATIVE")
 					//
-					// Check if the next token is either a '(' or NIL. If it is '(', then that would indicate the start of
-					// the Content-Type parameter list. If it is NIL, then it would signify that the Content-Type has no
-					// parameters.
+					// Check if the next token is either a '(', ')' or NIL.
+					//
+					// If it is '(', then that would indicate the start of the Content-Type parameter list.
+					// If it is ')', then that would indicate a BODY response without a Content-Type parameter list.
+					// If it is NIL, then it would signify that the Content-Type has no parameters.
+					//
+					// Note: Yandex also has this problem. See https://github.com/jstedfast/MailKit/issues/1861
+					// As does QQMail: https://github.com/jstedfast/MailKit/issues/1076
 
 					// Peek at the next token to see what we've got. If we get a '(' or NIL, then treat this as a multipart.
 					nextToken = await engine.PeekTokenAsync (cancellationToken).ConfigureAwait (false);
 
-					if (nextToken.Type == ImapTokenType.OpenParen || nextToken.Type == ImapTokenType.Nil) {
+					if (nextToken.Type == ImapTokenType.OpenParen || nextToken.Type == ImapTokenType.CloseParen || nextToken.Type == ImapTokenType.Nil) {
 						// Unget the multipart subtype.
 						engine.Stream.UngetToken (token);
 

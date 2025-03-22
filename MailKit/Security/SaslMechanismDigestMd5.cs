@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -64,7 +64,7 @@ namespace MailKit.Security {
 		/// </remarks>
 		/// <param name="credentials">The user's credentials.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="credentials"/> is <c>null</c>.
+		/// <paramref name="credentials"/> is <see langword="null" />.
 		/// </exception>
 		public SaslMechanismDigestMd5 (NetworkCredential credentials) : base (credentials)
 		{
@@ -79,9 +79,9 @@ namespace MailKit.Security {
 		/// <param name="userName">The user name.</param>
 		/// <param name="password">The password.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="userName"/> is <c>null</c>.</para>
+		/// <para><paramref name="userName"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="password"/> is <c>null</c>.</para>
+		/// <para><paramref name="password"/> is <see langword="null" />.</para>
 		/// </exception>
 		public SaslMechanismDigestMd5 (string userName, string password) : base (userName, password)
 		{

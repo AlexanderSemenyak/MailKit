@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -46,9 +46,9 @@ namespace MailKit.Search
 		/// <param name="attribute">The annotation attribute.</param>
 		/// <param name="value">The annotation attribute value.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="entry"/> is <c>null</c>.</para>
+		/// <para><paramref name="entry"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="attribute"/> is <c>null</c>.</para>
+		/// <para><paramref name="attribute"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// <paramref name="attribute"/> is not a valid attribute for searching.

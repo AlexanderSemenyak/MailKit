@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -52,12 +52,6 @@ namespace MailKit {
 	/// </remarks>
 	public abstract class MailService : IMailService
 	{
-#if NET48_OR_GREATER || NET5_0_OR_GREATER
-		const SslProtocols DefaultSslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
-#else
-		const SslProtocols DefaultSslProtocols = SslProtocols.Tls12 | (SslProtocols) 12288;
-#endif
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MailKit.MailService"/> class.
 		/// </summary>
@@ -66,14 +60,16 @@ namespace MailKit {
 		/// </remarks>
 		/// <param name="protocolLogger">The protocol logger.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="protocolLogger"/> is <c>null</c>.
+		/// <paramref name="protocolLogger"/> is <see langword="null" />.
 		/// </exception>
 		protected MailService (IProtocolLogger protocolLogger)
 		{
 			if (protocolLogger == null)
 				throw new ArgumentNullException (nameof (protocolLogger));
 
-			SslProtocols = DefaultSslProtocols;
+			// Default the SslProtocols value to `None` which allows the operating system to choose the best
+			// protocol to use and to block protocols that are not secure.
+			SslProtocols = SslProtocols.None;
 			CheckCertificateRevocation = true;
 			ProtocolLogger = protocolLogger;
 		}
@@ -139,11 +135,11 @@ namespace MailKit {
 		/// </summary>
 		/// <remarks>
 		/// <para>Gets or sets the enabled SSL and/or TLS protocol versions that the client is allowed to use.</para>
-		/// <para>By default, MailKit initializes this value to enable only TLS v1.2 and greater.
-		/// TLS v1.1, TLS v1.0 and all versions of SSL are not enabled by default due to them all being
-		/// susceptible to security vulnerabilities such as POODLE.</para>
-		/// <para>This property should be set before calling any of the
-		/// <a href="Overload_MailKit_MailService_Connect.htm">Connect</a> methods.</para>
+		/// <para>By default, MailKit initializes this value to <see cref="SslProtocols.None"/> which allows the
+		/// operating system to choose the best protocol to use and to block protocols that are not secure.</para>
+		/// <note type="note">This property should be set before calling any of the
+		/// <a href="Overload_MailKit_MailService_Connect.htm">Connect</a> or
+		/// <a href="Overload_MailKit_MailService_ConnectAsync.htm">ConnectAsync</a> methods.</note>
 		/// </remarks>
 		/// <value>The SSL and TLS protocol versions that are enabled.</value>
 		public SslProtocols SslProtocols {
@@ -155,9 +151,12 @@ namespace MailKit {
 		/// Get or set the cipher suites allowed to be used when negotiating an SSL or TLS connection.
 		/// </summary>
 		/// <remarks>
-		/// Specifies the cipher suites allowed to be used when negotiating an SSL or TLS connection.
-		/// When set to <c>null</c>, the operating system default is used. Use extreme caution when
-		/// changing this setting.
+		/// <para>Specifies the cipher suites allowed to be used when negotiating an SSL or TLS connection.
+		/// When set to <see langword="null" />, the operating system default is used. Use extreme caution when
+		/// changing this setting.</para>
+		/// <note type="note">This property should be set before calling any of the
+		/// <a href="Overload_MailKit_MailService_Connect.htm">Connect</a> or
+		/// <a href="Overload_MailKit_MailService_ConnectAsync.htm">ConnectAsync</a> methods.</note>
 		/// </remarks>
 		/// <value>The cipher algorithms allowed for use when negotiating SSL or TLS encryption.</value>
 		public CipherSuitesPolicy SslCipherSuitesPolicy {
@@ -182,8 +181,9 @@ namespace MailKit {
 		/// <remarks>
 		/// <para>Some servers may require the client SSL certificates in order
 		/// to allow the user to connect.</para>
-		/// <para>This property should be set before calling any of the
-		/// <a href="Overload_MailKit_MailService_Connect.htm">Connect</a> methods.</para>
+		/// <note type="note">This property should be set before calling any of the
+		/// <a href="Overload_MailKit_MailService_Connect.htm">Connect</a> or
+		/// <a href="Overload_MailKit_MailService_ConnectAsync.htm">ConnectAsync</a> methods.</note>
 		/// </remarks>
 		/// <value>The client SSL certificates.</value>
 		public X509CertificateCollection ClientCertificates {
@@ -195,17 +195,17 @@ namespace MailKit {
 		/// </summary>
 		/// <remarks>
 		/// <para>Gets or sets whether connecting via SSL/TLS should check certificate revocation.</para>
-		/// <para>Normally, the value of this property should be set to <c>true</c> (the default) for security
-		/// reasons, but there are times when it may be necessary to set it to <c>false</c>.</para>
+		/// <para>Normally, the value of this property should be set to <see langword="true" /> (the default) for security
+		/// reasons, but there are times when it may be necessary to set it to <see langword="false" />.</para>
 		/// <para>For example, most Certificate Authorities are probably pretty good at keeping their CRL and/or
 		/// OCSP servers up 24/7, but occasionally they do go down or are otherwise unreachable due to other
 		/// network problems between the client and the Certificate Authority. When this happens, it becomes
 		/// impossible to check the revocation status of one or more of the certificates in the chain
 		/// resulting in an <see cref="SslHandshakeException"/> being thrown in the
 		/// <a href="Overload_MailKit_MailService_Connect.htm">Connect</a> method. If this becomes a problem,
-		/// it may become desirable to set <see cref="CheckCertificateRevocation"/> to <c>false</c>.</para>
+		/// it may become desirable to set <see cref="CheckCertificateRevocation"/> to <see langword="false" />.</para>
 		/// </remarks>
-		/// <value><c>true</c> if certificate revocation should be checked; otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if certificate revocation should be checked; otherwise, <see langword="false" />.</value>
 		public bool CheckCertificateRevocation {
 			get; set;
 		}
@@ -215,8 +215,9 @@ namespace MailKit {
 		/// </summary>
 		/// <remarks>
 		/// <para>Gets or sets a callback function to validate the server certificate.</para>
-		/// <para>This property should be set before calling any of the
-		/// <a href="Overload_MailKit_MailService_Connect.htm">Connect</a> methods.</para>
+		/// <note type="note">This property should be set before calling any of the
+		/// <a href="Overload_MailKit_MailService_Connect.htm">Connect</a> or
+		/// <a href="Overload_MailKit_MailService_ConnectAsync.htm">ConnectAsync</a> methods.</note>
 		/// </remarks>
 		/// <example>
 		/// <code language="c#" source="Examples\SslCertificateValidation.cs"/>
@@ -232,7 +233,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Gets or sets the local IP end point to use when connecting to the remote host.
 		/// </remarks>
-		/// <value>The local IP end point or <c>null</c> to use the default end point.</value>
+		/// <value>The local IP end point or <see langword="null" /> to use the default end point.</value>
 		public IPEndPoint LocalEndPoint {
 			get; set;
 		}
@@ -268,16 +269,16 @@ namespace MailKit {
 		/// Gets whether or not the client is currently connected to an mail server.
 		/// </summary>
 		/// <remarks>
-		///<para>The <see cref="IsConnected"/> state is set to <c>true</c> immediately after
+		///<para>The <see cref="IsConnected"/> state is set to <see langword="true" /> immediately after
 		/// one of the <a href="Overload_MailKit_MailService_Connect.htm">Connect</a>
-		/// methods succeeds and is not set back to <c>false</c> until either the client
+		/// methods succeeds and is not set back to <see langword="false" /> until either the client
 		/// is disconnected via <see cref="Disconnect(bool,CancellationToken)"/> or until a
 		/// <see cref="ProtocolException"/> is thrown while attempting to read or write to
 		/// the underlying network socket.</para>
 		/// <para>When an <see cref="ProtocolException"/> is caught, the connection state of the
 		/// <see cref="MailService"/> should be checked before continuing.</para>
 		/// </remarks>
-		/// <value><c>true</c> if the client is connected; otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if the client is connected; otherwise, <see langword="false" />.</value>
 		public abstract bool IsConnected {
 			get;
 		}
@@ -288,7 +289,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Gets whether or not the connection is secure (typically via SSL or TLS).
 		/// </remarks>
-		/// <value><c>true</c> if the connection is secure; otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if the connection is secure; otherwise, <see langword="false" />.</value>
 		public abstract bool IsSecure {
 			get;
 		}
@@ -299,7 +300,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Gets whether or not the connection is encrypted (typically via SSL or TLS).
 		/// </remarks>
-		/// <value><c>true</c> if the connection is encrypted; otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if the connection is encrypted; otherwise, <see langword="false" />.</value>
 		public abstract bool IsEncrypted {
 			get;
 		}
@@ -310,7 +311,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Gets whether or not the connection is signed (typically via SSL or TLS).
 		/// </remarks>
-		/// <value><c>true</c> if the connection is signed; otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if the connection is signed; otherwise, <see langword="false" />.</value>
 		public abstract bool IsSigned {
 			get;
 		}
@@ -401,7 +402,7 @@ namespace MailKit {
 		/// <a href="Overload_MailKit_MailService_Authenticate.htm">Authenticate</a> methods
 		/// or any of the Async alternatives.</para>
 		/// </remarks>
-		/// <value><c>true</c> if the client is authenticated; otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if the client is authenticated; otherwise, <see langword="false" />.</value>
 		public abstract bool IsAuthenticated {
 			get;
 		}
@@ -418,10 +419,12 @@ namespace MailKit {
 			get; set;
 		}
 
-		const string AppleCertificateIssuer = "C=US, S=California, O=Apple Inc., CN=Apple Public Server RSA CA 12 - G1";
+		const string AppleCertificateIssuer = "C=US, S=California, O=Apple Inc., CN=Apple Public Server RSA CA 11 - G1";
 		const string GMailCertificateIssuer = "CN=WR2, O=Google Trust Services, C=US";
 		const string OutlookCertificateIssuer = "CN=DigiCert Cloud Services CA-1, O=DigiCert Inc, C=US";
-		const string YahooCertificateIssuer = "CN=DigiCert SHA2 High Assurance Server CA, OU=www.digicert.com, O=DigiCert Inc, C=US";
+		const string LegacyYahooCertificateIssuer = "CN=DigiCert Global G2 TLS RSA SHA256 2020 CA1, O=DigiCert Inc, C=US";
+		const string YahooImapCertificateIssuer = "CN=DigiCert SHA2 High Assurance Server CA, OU=www.digicert.com, O=DigiCert Inc, C=US";
+		const string YahooSmtpCertificateIssuer = "CN=DigiCert Global G2 TLS RSA SHA256 2020 CA1, O=DigiCert Inc, C=US";
 		const string GmxDotComCertificateIssuer = "CN=GeoTrust TLS RSA CA G1, OU=www.digicert.com, O=DigiCert Inc, C=US";
 		const string GmxDotNetCertificateIssuer = "CN=Telekom Security ServerID OV Class 2 CA, O=Deutsche Telekom Security GmbH, C=DE";
 
@@ -437,75 +440,66 @@ namespace MailKit {
 			case "imap.gmail.com":
 				switch (issuer) {
 				case GMailCertificateIssuer:
-					return (serial == "00C36B38D49A11594910E283D19905BF6E" && fingerprint == "EB25D383FFCC3C9D8A7F913A9382B023FBE9BE3A") // Expires 10/22/2024 8:49:07 AM
-						|| (serial == "00FFA7D1CF23CECCC110CD05F37B6275A7" && fingerprint == "573FC78F1842DC51063958234A9A6D5AF31E786B") // Expires 11/4/2024 7:15:59 AM
-						|| (serial == "19FD53EFA3733013101E2E13ECE820F9" && fingerprint == "65F71624D8D9A4D35CF0815D59093323EA03E364") // Expires 11/18/2024 2:12:13 AM
-						|| (serial == "35F95470970504ED10A9F69FC004E97E" && fingerprint == "E69AD14E1992F56EFA2CD4D8DA1AC64867586132"); // Expires 12/17/2024 3:14:49 AM
+					return (serial == "05145C9BED1F0724127CDE893877CD1F" && fingerprint == "7BA8CD3132E537EB031E259180BE8DA225CDB541") // Expires 3/31/2025 4:37:06 AM
+						|| (serial == "00FE0040D14EEED15210BBA92D348E4D88" && fingerprint == "C66C2094829C004DAB1DE89A52FCE6E1A68C66F4"); // Expires 5/21/2025 11:33:55 AM
 				default:
 					return false;
 				}
 			case "pop.gmail.com":
 				switch (issuer) {
 				case GMailCertificateIssuer:
-					return (serial == "00E603D30C122C29C709C52025F805A4B6" && fingerprint == "C6F47B3813CF68DCFA563C2801C389DE3464047E") // Expires 10/22/2024 8:49:07 AM
-						|| (serial == "008C8CB1EEE01774C00AA15482E99FEFF1" && fingerprint == "D1B888CC09526DCAA017CE51AB439B1CA6ACA646") // Expires 11/4/2024 7:15:59 AM
-						|| (serial == "00BED72E3B5A30707809E8439771D26062" && fingerprint == "4BF70BF35C4F0BBFDBF041C2F480A181C9DD25BD") // Expires 11/18/2024 2:12:08 AM
-						|| (serial == "4B72F72BC6181F370A7578775CEC2DD4" && fingerprint == "6963D64F36E3F96EC81F346042DF77A7523BDDAF"); // Expires 12/17/2024 3:14:49 AM
+					return (serial == "00D81E78EAF732DB290AEDBEC39DFF9E78" && fingerprint == "CAFD3EDAF286EB359DAA9C2E47878554C006A1D2") // Expires 3/31/2025 4:37:06 AM
+						|| (serial == "76D21E0D362BB779124123D75707635A" && fingerprint == "F370C14F1C6367C3D1E9A25E01C8C0F1DDEA61BB"); // Expires 5/21/2025 11:33:55 AM
 				default:
 					return false;
 				}
 			case "smtp.gmail.com":
 				switch (issuer) {
 				case GMailCertificateIssuer:
-					return (serial == "67549C98536BBE090AA741E2192CF045" && fingerprint == "FAA1AC71FD9B8537AF0A53A54553782C9FC83D78") // Expires 10/22/2024 8:49:28 AM
-						|| (serial == "2FC65EE98F6A70A80AC7565B356EB8FF" && fingerprint == "72223DC8A6992339E848AA9DDD82C79A65351387") // Expires 11/4/2024 7:16:04 AM
-						|| (serial == "00F3054B7DC3383D1312E71394D76DCB43" && fingerprint == "F2B79C3C4CFD573137BB8DF6DDF7FBA2D709B2BD") // Expires 11/18/2024 2:12:08 AM
-						|| (serial == "16571301C295003D1018810046001BB9" && fingerprint == "F00C2A42C149B5AE5AB90C60D0FF5A7E92645365"); // Expires 12/17/2024 3:14:49 AM
+					return (serial == "6099CAAE55FF547510BEC8408B47A7C7" && fingerprint == "826C7758A11D3AE662D0207FF3349507E60F07C6") // Expires 3/31/2025 4:37:07 AM
+						|| (serial == "2D7B7443E9766484108745E757A02426" && fingerprint == "651C2431F2AB43FE21BF57580894C37DD6E9A7F0"); // Expires 5/21/2025 11:33:56 AM
 				default:
 					return false;
 				}
 			case "outlook.com":
 				switch (issuer) {
 				case OutlookCertificateIssuer:
-					return (serial == "087FD4DF6C1C2E78A30F37C6F46E8C04" && fingerprint == "3618F1AE4C1B9AB443F16E8231488181E32E4509") // Expires 10/30/2024 7:59:59 PM
-						|| (serial == "01A850C3C037D758B901DF7B77357065" && fingerprint == "2C61C526BC9A1CE6BE6B9200FCAF292A23845E5C") // Expires 1/21/2025 6:59:59 PM
-						|| (serial == "0ECDAB152D2161F7C843D25F3F00FCDE" && fingerprint == "891A3E1C8074F9BCFD9BE2A05CB6FDB789032DE2"); // Expires 6/26/2025 7:59:59 PM
+					return (serial == "0ECDAB152D2161F7C843D25F3F00FCDE" && fingerprint == "891A3E1C8074F9BCFD9BE2A05CB6FDB789032DE2"); // Expires 6/26/2025 7:59:59 PM
 				default:
 					return false;
 				}
 			case "imap.mail.me.com":
 				switch (issuer) {
 				case AppleCertificateIssuer:
-					return (serial == "2004FFF3287F268C99F1AE8C90331274" && fingerprint == "35F0BA682F8AF6666C9DD02F59891AD6A6AAC699"); // Expires 3/4/2025 8:05:53 PM
+					return (serial == "7E1C33F6E37E35585D5289AFEAB00631" && fingerprint == "D24A3046E0CB88257832F0FD922B2290E3507710"); // Expires 4/1/2025 3:50:21 PM
 				default:
 					return false;
 				}
 			case "smtp.mail.me.com":
 				switch (issuer) {
 				case AppleCertificateIssuer:
-					return (serial == "5ED281D01FA7DB8C0A33B4FFF87EB091" && fingerprint == "A22D9D64C9EBB577A898E9669F8B3B78B343BA29"); // Expires 1/20/2025 6:39:58 AM
+					return (serial == "7C79BD602EDDA581082EA4F1FD04324C" && fingerprint == "8CB1BF594763AEB92733EEE6F68560CDE74ED44D"); // Expires 4/15/2025 3:53:53 PM
 				default:
 					return false;
 				}
 			case "*.imap.mail.yahoo.com":
 				switch (issuer) {
-				case YahooCertificateIssuer:
-					return (serial == "052200C5872E1737CD7D556E3FE99EBE" && fingerprint == "FEA0FB760215F3C23E76769D23BA46F9F3EADBAF"); // Expires 1/8/2025 6:59:59 PM
+				case YahooImapCertificateIssuer:
+					return (serial == "07044A69372807CB6259DB41B639DE1F" && fingerprint == "4227BA6BE7ED2A9AE7100563FD06F23775A078E9"); // Expires 6/4/2025 7:59:59 PM
 				default:
 					return false;
 				}
 			case "legacy.pop.mail.yahoo.com":
 				switch (issuer) {
-				case YahooCertificateIssuer:
-					return (serial == "01D4AA80FB90B486FFE459E8BE527271" && fingerprint == "E6C0190AC78A3306B3522972DA9A1926545D933D") // Expires 10/16/2024 7:59:59 PM
-						|| (serial == "05DB0F7B94BD32241B978B03FE436B66" && fingerprint == "050EC7D601A1616EA9A0FB6B63005D6048683436"); // Expires 1/22/2025 6:59:59 PM
+				case LegacyYahooCertificateIssuer:
+					return (serial == "0FA8BA4B78577BBF220019EA07377C48" && fingerprint == "44648D48B6710FAB46959A7DF92812F2F59B2770"); // Expires 6/18/2025 7:59:59 PM
 				default:
 					return false;
 				}
 			case "smtp.mail.yahoo.com":
 				switch (issuer) {
-				case YahooCertificateIssuer:
-					return (serial == "07B21FFCE7DD0BF8CB58DF2B310C8DAC" && fingerprint == "3CA00F0E097892120775AC4DEC283BEFFD4702A1"); // Expires 1/22/2025 6:59:59 PM
+				case YahooSmtpCertificateIssuer:
+					return (serial == "057189FA9C1D4C01E4020622AAFB54AB" && fingerprint == "EFD6A9EDB1265E4A9709D55966513F7D1AF54D9E"); // Expires 6/18/2025 7:59:59 PM
 				default:
 					return false;
 				}
@@ -514,7 +508,7 @@ namespace MailKit {
 			case "mail.gmx.com":
 				return issuer == GmxDotComCertificateIssuer && serial == "01840046B1B8C0DCF17EBFB93860BDF8" && fingerprint == "CBDF309BF6FCD4199B448FA403B4E2C718DFFE63"; // Expires 6/14/2025 7:59:59 PM
 			case "mail.gmx.net":
-				return issuer == GmxDotNetCertificateIssuer && serial == "397A70341E4CCCA54DC53FDE71B9E1FA" && fingerprint == "51472ACB1E62C133845BF34A2BA17457A54A2880"; // Expires 2/23/2025 6:59:59 PM
+				return issuer == GmxDotNetCertificateIssuer && serial == "3DF168E2174005F4FDC72F92FBEFD952" && fingerprint == "EDB2B7B7E9C624DF221ECDC46A7946D003F90ADE"; // Expires 1/24/2026 6:59:59 PM
 			default:
 				return false;
 			}
@@ -540,7 +534,7 @@ namespace MailKit {
 		/// for a list of commonly used mail servers such as gmail.com, outlook.com, mail.me.com, yahoo.com,
 		/// and gmx.net.</para>
 		/// </remarks>
-		/// <returns><c>true</c> if the certificate is deemed valid; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the certificate is deemed valid; otherwise, <see langword="false" />.</returns>
 		/// <param name="sender">The object that is connecting via SSL or TLS.</param>
 		/// <param name="certificate">The server's SSL certificate.</param>
 		/// <param name="chain">The server's SSL certificate chain.</param>
@@ -632,7 +626,7 @@ namespace MailKit {
 		/// <param name="options">The secure socket options to when connecting.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="host"/> is <c>null</c>.
+		/// <paramref name="host"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="port"/> is not between <c>0</c> and <c>65535</c>.
@@ -672,7 +666,7 @@ namespace MailKit {
 		/// <param name="options">The secure socket options to when connecting.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="host"/> is <c>null</c>.
+		/// <paramref name="host"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="port"/> is not between <c>0</c> and <c>65535</c>.
@@ -714,9 +708,9 @@ namespace MailKit {
 		/// <param name="options">The secure socket options to when connecting.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="socket"/> is <c>null</c>.</para>
+		/// <para><paramref name="socket"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="host"/> is <c>null</c>.</para>
+		/// <para><paramref name="host"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="port"/> is not between <c>0</c> and <c>65535</c>.
@@ -758,9 +752,9 @@ namespace MailKit {
 		/// <param name="options">The secure socket options to when connecting.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="socket"/> is <c>null</c>.</para>
+		/// <para><paramref name="socket"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="host"/> is <c>null</c>.</para>
+		/// <para><paramref name="host"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="port"/> is not between <c>0</c> and <c>65535</c>.
@@ -801,9 +795,9 @@ namespace MailKit {
 		/// <param name="options">The secure socket options to when connecting.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="stream"/> is <c>null</c>.</para>
+		/// <para><paramref name="stream"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="host"/> is <c>null</c>.</para>
+		/// <para><paramref name="host"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="port"/> is not between <c>0</c> and <c>65535</c>.
@@ -843,9 +837,9 @@ namespace MailKit {
 		/// <param name="options">The secure socket options to when connecting.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="stream"/> is <c>null</c>.</para>
+		/// <para><paramref name="stream"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="host"/> is <c>null</c>.</para>
+		/// <para><paramref name="host"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="port"/> is not between <c>0</c> and <c>65535</c>.
@@ -922,7 +916,7 @@ namespace MailKit {
 		/// <param name="uri">The server URI.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// The <paramref name="uri"/> is <c>null</c>.
+		/// The <paramref name="uri"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// The <paramref name="uri"/> is not an absolute URI.
@@ -968,7 +962,7 @@ namespace MailKit {
 		/// <param name="uri">The server URI.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// The <paramref name="uri"/> is <c>null</c>.
+		/// The <paramref name="uri"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// The <paramref name="uri"/> is not an absolute URI.
@@ -1012,7 +1006,7 @@ namespace MailKit {
 		/// <note type="note">
 		/// <para>The <paramref name="useSsl"/> argument only controls whether or
 		/// not the client makes an SSL-wrapped connection. In other words, even if the
-		/// <paramref name="useSsl"/> parameter is <c>false</c>, SSL/TLS may still be used if
+		/// <paramref name="useSsl"/> parameter is <see langword="false" />, SSL/TLS may still be used if
 		/// the mail server supports the STARTTLS extension.</para>
 		/// <para>To disable all use of SSL/TLS, use the
 		/// <see cref="Connect(string,int,MailKit.Security.SecureSocketOptions,System.Threading.CancellationToken)"/>
@@ -1023,10 +1017,10 @@ namespace MailKit {
 		/// </remarks>
 		/// <param name="host">The host to connect to.</param>
 		/// <param name="port">The port to connect to. If the specified port is <c>0</c>, then the default port will be used.</param>
-		/// <param name="useSsl"><value>true</value> if the client should make an SSL-wrapped connection to the server; otherwise, <value>false</value>.</param>
+		/// <param name="useSsl"><see langword="true" /> if the client should make an SSL-wrapped connection to the server; otherwise, <see langword="false" />.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// The <paramref name="host"/> is <c>null</c>.
+		/// The <paramref name="host"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="port"/> is out of range (<value>0</value> to <value>65535</value>, inclusive).
@@ -1074,7 +1068,7 @@ namespace MailKit {
 		/// <note type="note">
 		/// <para>The <paramref name="useSsl"/> argument only controls whether or
 		/// not the client makes an SSL-wrapped connection. In other words, even if the
-		/// <paramref name="useSsl"/> parameter is <c>false</c>, SSL/TLS may still be used if
+		/// <paramref name="useSsl"/> parameter is <see langword="false" />, SSL/TLS may still be used if
 		/// the mail server supports the STARTTLS extension.</para>
 		/// <para>To disable all use of SSL/TLS, use the
 		/// <see cref="ConnectAsync(string,int,MailKit.Security.SecureSocketOptions,System.Threading.CancellationToken)"/>
@@ -1086,10 +1080,10 @@ namespace MailKit {
 		/// <returns>An asynchronous task context.</returns>
 		/// <param name="host">The host to connect to.</param>
 		/// <param name="port">The port to connect to. If the specified port is <c>0</c>, then the default port will be used.</param>
-		/// <param name="useSsl"><value>true</value> if the client should make an SSL-wrapped connection to the server; otherwise, <value>false</value>.</param>
+		/// <param name="useSsl"><see langword="true" /> if the client should make an SSL-wrapped connection to the server; otherwise, <see langword="false" />.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// The <paramref name="host"/> is <c>null</c>.
+		/// The <paramref name="host"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="port"/> is out of range (<value>0</value> to <value>65535</value>, inclusive).
@@ -1149,9 +1143,9 @@ namespace MailKit {
 		/// <param name="credentials">The user's credentials.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="encoding"/> is <c>null</c>.</para>
+		/// <para><paramref name="encoding"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="credentials"/> is <c>null</c>.</para>
+		/// <para><paramref name="credentials"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1197,9 +1191,9 @@ namespace MailKit {
 		/// <param name="credentials">The user's credentials.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="encoding"/> is <c>null</c>.</para>
+		/// <para><paramref name="encoding"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="credentials"/> is <c>null</c>.</para>
+		/// <para><paramref name="credentials"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1243,7 +1237,7 @@ namespace MailKit {
 		/// <param name="credentials">The user's credentials.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="credentials"/> is <c>null</c>.
+		/// <paramref name="credentials"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1291,7 +1285,7 @@ namespace MailKit {
 		/// <param name="credentials">The user's credentials.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="credentials"/> is <c>null</c>.
+		/// <paramref name="credentials"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1340,11 +1334,11 @@ namespace MailKit {
 		/// <param name="password">The password.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="encoding"/> is <c>null</c>.</para>
+		/// <para><paramref name="encoding"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="userName"/> is <c>null</c>.</para>
+		/// <para><paramref name="userName"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="password"/> is <c>null</c>.</para>
+		/// <para><paramref name="password"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1405,11 +1399,11 @@ namespace MailKit {
 		/// <param name="password">The password.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="encoding"/> is <c>null</c>.</para>
+		/// <para><paramref name="encoding"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="userName"/> is <c>null</c>.</para>
+		/// <para><paramref name="userName"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="password"/> is <c>null</c>.</para>
+		/// <para><paramref name="password"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1471,9 +1465,9 @@ namespace MailKit {
 		/// <param name="password">The password.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="userName"/> is <c>null</c>.</para>
+		/// <para><paramref name="userName"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="password"/> is <c>null</c>.</para>
+		/// <para><paramref name="password"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1522,9 +1516,9 @@ namespace MailKit {
 		/// <param name="password">The password.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="userName"/> is <c>null</c>.</para>
+		/// <para><paramref name="userName"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="password"/> is <c>null</c>.</para>
+		/// <para><paramref name="password"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1564,7 +1558,7 @@ namespace MailKit {
 		/// <param name="mechanism">The SASL mechanism.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="mechanism"/> is <c>null</c>.
+		/// <paramref name="mechanism"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1602,7 +1596,7 @@ namespace MailKit {
 		/// <param name="mechanism">The SASL mechanism.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="mechanism"/> is <c>null</c>.
+		/// <paramref name="mechanism"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1631,12 +1625,12 @@ namespace MailKit {
 		/// Disconnect the service.
 		/// </summary>
 		/// <remarks>
-		/// If <paramref name="quit"/> is <c>true</c>, a logout/quit command will be issued in order to disconnect cleanly.
+		/// If <paramref name="quit"/> is <see langword="true" />, a logout/quit command will be issued in order to disconnect cleanly.
 		/// </remarks>
 		/// <example>
 		/// <code language="c#" source="Examples\SmtpExamples.cs" region="SendMessage"/>
 		/// </example>
-		/// <param name="quit">If set to <c>true</c>, a logout/quit command will be issued in order to disconnect cleanly.</param>
+		/// <param name="quit">If set to <see langword="true" />, a logout/quit command will be issued in order to disconnect cleanly.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1647,10 +1641,10 @@ namespace MailKit {
 		/// Asynchronously disconnect the service.
 		/// </summary>
 		/// <remarks>
-		/// If <paramref name="quit"/> is <c>true</c>, a logout/quit command will be issued in order to disconnect cleanly.
+		/// If <paramref name="quit"/> is <see langword="true" />, a logout/quit command will be issued in order to disconnect cleanly.
 		/// </remarks>
 		/// <returns>An asynchronous task context.</returns>
-		/// <param name="quit">If set to <c>true</c>, a logout/quit command will be issued in order to disconnect cleanly.</param>
+		/// <param name="quit">If set to <see langword="true" />, a logout/quit command will be issued in order to disconnect cleanly.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="MailService"/> has been disposed.
@@ -1757,7 +1751,7 @@ namespace MailKit {
 		/// <param name="host">The name of the host that the client was connected to.</param>
 		/// <param name="port">The port that the client was connected to on the remote host.</param>
 		/// <param name="options">The SSL/TLS options that were used by the client.</param>
-		/// <param name="requested"><c>true</c> if the disconnect was explicitly requested; otherwise, <c>false</c>.</param>
+		/// <param name="requested"><see langword="true" /> if the disconnect was explicitly requested; otherwise, <see langword="false" />.</param>
 		protected virtual void OnDisconnected (string host, int port, SecureSocketOptions options, bool requested)
 		{
 			Disconnected?.Invoke (this, new DisconnectedEventArgs (host, port, options, requested));
@@ -1792,8 +1786,8 @@ namespace MailKit {
 		/// Releases the unmanaged resources used by the <see cref="MailService"/> and
 		/// optionally releases the managed resources.
 		/// </remarks>
-		/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources;
-		/// <c>false</c> to release only the unmanaged resources.</param>
+		/// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources;
+		/// <see langword="false" /> to release only the unmanaged resources.</param>
 		protected virtual void Dispose (bool disposing)
 		{
 			if (disposing)

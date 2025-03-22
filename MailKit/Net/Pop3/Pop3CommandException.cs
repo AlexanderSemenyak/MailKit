@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -56,7 +56,7 @@ namespace MailKit.Net.Pop3 {
 		/// <param name="info">The serialization info.</param>
 		/// <param name="context">The streaming context.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="info"/> is <c>null</c>.
+		/// <paramref name="info"/> is <see langword="null" />.
 		/// </exception>
 		[SecuritySafeCritical]
 		[Obsolete ("This API supports obsolete formatter-based serialization. It should not be called or extended by application code.")]
@@ -89,7 +89,7 @@ namespace MailKit.Net.Pop3 {
 		/// <param name="statusText">The response status text.</param>
 		/// <param name="innerException">An inner exception.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="statusText"/> is <c>null</c>.
+		/// <paramref name="statusText"/> is <see langword="null" />.
 		/// </exception>
 		public Pop3CommandException (string message, string statusText, Exception innerException) : base (message, innerException)
 		{
@@ -120,7 +120,7 @@ namespace MailKit.Net.Pop3 {
 		/// <param name="message">The error message.</param>
 		/// <param name="statusText">The response status text.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="statusText"/> is <c>null</c>.
+		/// <paramref name="statusText"/> is <see langword="null" />.
 		/// </exception>
 		public Pop3CommandException (string message, string statusText) : base (message)
 		{
@@ -166,7 +166,7 @@ namespace MailKit.Net.Pop3 {
 		/// <param name="info">The serialization info.</param>
 		/// <param name="context">The streaming context.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="info"/> is <c>null</c>.
+		/// <paramref name="info"/> is <see langword="null" />.
 		/// </exception>
 		[SecurityCritical]
 #if NET8_0_OR_GREATER

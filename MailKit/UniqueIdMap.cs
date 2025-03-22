@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -57,9 +57,9 @@ namespace MailKit {
 		/// <param name="source">The unique identifiers used in the source folder.</param>
 		/// <param name="destination">The unique identifiers used in the destination folder.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="source"/> is <c>null</c>.</para>
+		/// <para><paramref name="source"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="destination"/> is <c>null</c>.</para>
+		/// <para><paramref name="destination"/> is <see langword="null" />.</para>
 		/// </exception>
 		public UniqueIdMap (IList<UniqueId> source, IList<UniqueId> destination)
 		{
@@ -139,7 +139,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Checks if the specified unique identifier has been remapped.
 		/// </remarks>
-		/// <returns><c>true</c> if the unique identifier has been remapped; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the unique identifier has been remapped; otherwise, <see langword="false" />.</returns>
 		/// <param name="key">The unique identifier.</param>
 		public bool ContainsKey (UniqueId key)
 		{
@@ -152,7 +152,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Attempts to get the remapped unique identifier.
 		/// </remarks>
-		/// <returns><c>true</c> on success; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> on success; otherwise, <see langword="false" />.</returns>
 		/// <param name="key">The unique identifier of the message in the source folder.</param>
 		/// <param name="value">The unique identifier of the message in the destination folder.</param>
 		public bool TryGetValue (UniqueId key, out UniqueId value)

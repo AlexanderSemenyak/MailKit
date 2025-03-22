@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -591,11 +591,11 @@ namespace MailKit {
 		/// <note type="warning">This syntax, while similar to IMAP's ENVELOPE syntax, is not
 		/// completely compatible.</note>
 		/// </remarks>
-		/// <returns><c>true</c>, if the envelope was successfully parsed, <c>false</c> otherwise.</returns>
+		/// <returns><see langword="true" />, if the envelope was successfully parsed, <see langword="false" /> otherwise.</returns>
 		/// <param name="text">The text to parse.</param>
 		/// <param name="envelope">The parsed envelope.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="text"/> is <c>null</c>.
+		/// <paramref name="text"/> is <see langword="null" />.
 		/// </exception>
 		public static bool TryParse (string text, out Envelope envelope)
 		{

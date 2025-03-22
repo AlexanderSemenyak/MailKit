@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -44,9 +44,9 @@ namespace MailKit.Search {
 		/// <param name="field">The header field name.</param>
 		/// <param name="value">The value to match against.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="field"/> is <c>null</c>.</para>
+		/// <para><paramref name="field"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="value"/> is <c>null</c>.</para>
+		/// <para><paramref name="value"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// <paramref name="field"/> is empty.

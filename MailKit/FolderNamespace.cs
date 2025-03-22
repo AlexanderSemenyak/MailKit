@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,7 @@ namespace MailKit {
 		/// <param name="directorySeparator">The directory separator.</param>
 		/// <param name="path">The folder path.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="path"/> is <c>null</c>.
+		/// <paramref name="path"/> is <see langword="null" />.
 		/// </exception>
 		public FolderNamespace (char directorySeparator, string path)
 		{

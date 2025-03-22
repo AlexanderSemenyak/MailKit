@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -78,7 +78,7 @@ namespace MailKit {
 		/// <param name="flags">The message flags.</param>
 		/// <param name="keywords">The user-defined keywords.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="keywords"/> is <c>null</c>.
+		/// <paramref name="keywords"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="index"/> is out of range.
@@ -122,7 +122,7 @@ namespace MailKit {
 		/// <param name="keywords">The user-defined keywords.</param>
 		/// <param name="modseq">The modification sequence value.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="keywords"/> is <c>null</c>.
+		/// <paramref name="keywords"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="index"/> is out of range.
@@ -166,7 +166,7 @@ namespace MailKit {
 		/// <param name="flags">The message flags.</param>
 		/// <param name="keywords">The user-defined keywords.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="keywords"/> is <c>null</c>.
+		/// <paramref name="keywords"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="index"/> is out of range.
@@ -212,7 +212,7 @@ namespace MailKit {
 		/// <param name="keywords">The user-defined message flags.</param>
 		/// <param name="modseq">The modification sequence value.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="keywords"/> is <c>null</c>.
+		/// <paramref name="keywords"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="index"/> is out of range.

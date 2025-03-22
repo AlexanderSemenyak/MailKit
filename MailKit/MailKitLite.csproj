@@ -3,15 +3,15 @@
   <PropertyGroup>
     <Description>An Open Source cross-platform .NET mail-client library that is based on MimeKit and optimized for mobile devices.</Description>
     <AssemblyTitle>MailKit</AssemblyTitle>
-    <VersionPrefix>4.8.0</VersionPrefix>
+    <VersionPrefix>4.11.0</VersionPrefix>
     <Authors>Jeffrey Stedfast</Authors>
     <LangVersion>10</LangVersion>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net462;net47;net48;net6.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net462;net47;net48;net8.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <AssemblyName>MailKitLite</AssemblyName>
     <PackageId>MailKitLite</PackageId>
-    <PackageTags>smtp;pop3;imap;mime;security;dkim;smime;s/mime;openpgp;pgp;mbox;mail;email;parser;tnef;net462;net47;net48;net6.0;net8.0;netstandard;netstandard2.0;netstandard2.1</PackageTags>
+    <PackageTags>smtp;pop3;imap;mime;security;dkim;smime;s/mime;openpgp;pgp;mbox;mail;email;parser;tnef</PackageTags>
     <PackageProjectUrl>https://github.com/jstedfast/MailKit</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/jstedfast/MailKit/blob/master/License.md</PackageLicenseUrl>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -51,17 +51,16 @@
     <DefineConstants>$(DefineConstants);SERIALIZABLE</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
+  </PropertyGroup>
+
   <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) Or '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="System.Formats.Asn1" Version="8.0.1" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.0" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
+  <ItemGroup>
     <PackageReference Include="System.Formats.Asn1" Version="8.0.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) Or $(TargetFramework.StartsWith('netstandard2.')) ">
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -83,6 +82,7 @@
     <Compile Include="Net\Imap\ImapCommand.cs" />
     <Compile Include="Net\Imap\ImapCommandException.cs" />
     <Compile Include="Net\Imap\ImapCommandResponse.cs" />
+    <Compile Include="Net\Imap\ImapCommandStatus.cs" />
     <Compile Include="Net\Imap\ImapEncoding.cs" />
     <Compile Include="Net\Imap\ImapEngine.cs" />
     <Compile Include="Net\Imap\ImapEventGroup.cs" />
@@ -92,7 +92,9 @@
     <Compile Include="Net\Imap\ImapFolderFetch.cs" />
     <Compile Include="Net\Imap\ImapFolderFlags.cs" />
     <Compile Include="Net\Imap\ImapFolderSearch.cs" />
+    <Compile Include="Net\Imap\ImapIdleContext.cs" />
     <Compile Include="Net\Imap\ImapImplementation.cs" />
+    <Compile Include="Net\Imap\ImapLiteral.cs" />
     <Compile Include="Net\Imap\ImapProtocolException.cs" />
     <Compile Include="Net\Imap\ImapResponseCode.cs" />
     <Compile Include="Net\Imap\ImapSearchQueryOptimizer.cs" />

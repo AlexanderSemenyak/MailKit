@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -71,7 +71,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Gets or sets the timestamp that should be used by folder as the <see cref="MessageSummaryItems.InternalDate"/>.
 		/// </remarks>
-		/// <value>The date and time to use for the INTERNALDATE or <c>null</c> if it should be left up to the folder to decide.</value>
+		/// <value>The date and time to use for the INTERNALDATE or <see langword="null" /> if it should be left up to the folder to decide.</value>
 		DateTimeOffset? InternalDate { get; set; }
 
 		/// <summary>

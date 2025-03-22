@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -161,7 +161,7 @@ namespace MailKit {
 		/// is necessary to include the <see cref="MessageSummaryItems.BodyStructure"/> flag when
 		/// fetching summary information from an <see cref="IMailFolder"/>.</note>
 		/// </remarks>
-		/// <value><c>true</c> if this part is an attachment; otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if this part is an attachment; otherwise, <see langword="false" />.</value>
 		public bool IsAttachment {
 			get { return ContentDisposition != null && ContentDisposition.IsAttachment; }
 		}
@@ -203,7 +203,7 @@ namespace MailKit {
 		/// </remarks>
 		/// <param name="visitor">The visitor.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="visitor"/> is <c>null</c>.
+		/// <paramref name="visitor"/> is <see langword="null" />.
 		/// </exception>
 		public override void Accept (BodyPartVisitor visitor)
 		{

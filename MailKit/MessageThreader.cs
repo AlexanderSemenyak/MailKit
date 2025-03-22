@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -395,7 +395,7 @@ namespace MailKit {
 		/// <param name="messages">The messages.</param>
 		/// <param name="algorithm">The threading algorithm.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="messages"/> is <c>null</c>.
+		/// <paramref name="messages"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="algorithm"/> is not a valid threading algorithm.
@@ -421,9 +421,9 @@ namespace MailKit {
 		/// <param name="algorithm">The threading algorithm.</param>
 		/// <param name="orderBy">The requested sort ordering.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="messages"/> is <c>null</c>.</para>
+		/// <para><paramref name="messages"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="orderBy"/> is <c>null</c>.</para>
+		/// <para><paramref name="orderBy"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="algorithm"/> is not a valid threading algorithm.
@@ -506,7 +506,7 @@ namespace MailKit {
 		/// <param name="subject">The Subject header value.</param>
 		/// <param name="replyDepth">The reply depth.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="subject"/> is <c>null</c>.
+		/// <paramref name="subject"/> is <see langword="null" />.
 		/// </exception>
 		public static string GetThreadableSubject (string subject, out int replyDepth)
 		{

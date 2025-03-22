@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -173,7 +173,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Gets whether or not the folder is a namespace folder.
 		/// </remarks>
-		/// <value><c>true</c> if the folder is a namespace folder; otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if the folder is a namespace folder; otherwise, <see langword="false" />.</value>
 		bool IsNamespace { get; }
 
 		/// <summary>
@@ -213,7 +213,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Gets whether or not the folder is subscribed.
 		/// </remarks>
-		/// <value><c>true</c> if the folder is subscribed; otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if the folder is subscribed; otherwise, <see langword="false" />.</value>
 		bool IsSubscribed { get; }
 
 		/// <summary>
@@ -222,8 +222,17 @@ namespace MailKit {
 		/// <remarks>
 		/// Gets whether or not the folder is currently open.
 		/// </remarks>
-		/// <value><c>true</c> if the folder is currently open; otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if the folder is currently open; otherwise, <see langword="false" />.</value>
 		bool IsOpen { get; }
+
+		/// <summary>
+		/// Get whether or not the folder can be opened.
+		/// </summary>
+		/// <remarks>
+		/// Gets whether or not the folder can be opened.
+		/// </remarks>
+		/// <value><see langword="true" /> if the folder can be opened; otherwise, <see langword="false" />.</value>
+		bool CanOpen { get; }
 
 		/// <summary>
 		/// Get whether or not the folder exists.
@@ -231,7 +240,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Gets whether or not the folder exists.
 		/// </remarks>
-		/// <value><c>true</c> if the folder exists; otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if the folder exists; otherwise, <see langword="false" />.</value>
 		bool Exists { get; }
 
 		/// <summary>
@@ -346,7 +355,7 @@ namespace MailKit {
 		/// Determines whether or not an <see cref="IMailFolder"/> supports a feature.
 		/// </remarks>
 		/// <param name="feature">The desired feature.</param>
-		/// <returns><c>true</c> if the feature is supported; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the feature is supported; otherwise, <see langword="false" />.</returns>
 		bool Supports (FolderFeature feature);
 
 		/// <summary>
@@ -366,6 +375,39 @@ namespace MailKit {
 		/// <param name="highestModSeq">The last known <see cref="HighestModSeq"/> value.</param>
 		/// <param name="uids">The last known list of unique message identifiers.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="access"/> is not a valid value.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The quick resynchronization feature has not been enabled.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the quick resynchronization feature.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		FolderAccess Open (FolderAccess access, uint uidValidity, ulong highestModSeq, IList<UniqueId> uids, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -385,6 +427,39 @@ namespace MailKit {
 		/// <param name="highestModSeq">The last known <see cref="HighestModSeq"/> value.</param>
 		/// <param name="uids">The last known list of unique message identifiers.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="access"/> is not a valid value.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The quick resynchronization feature has not been enabled.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the quick resynchronization feature.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<FolderAccess> OpenAsync (FolderAccess access, uint uidValidity, ulong highestModSeq, IList<UniqueId> uids, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -396,6 +471,33 @@ namespace MailKit {
 		/// <returns>The <see cref="FolderAccess"/> state of the folder.</returns>
 		/// <param name="access">The requested folder access.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="access"/> is not a valid value.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		FolderAccess Open (FolderAccess access, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -407,6 +509,33 @@ namespace MailKit {
 		/// <returns>The <see cref="FolderAccess"/> state of the folder.</returns>
 		/// <param name="access">The requested folder access.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="access"/> is not a valid value.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<FolderAccess> OpenAsync (FolderAccess access, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -415,8 +544,32 @@ namespace MailKit {
 		/// <remarks>
 		/// Closes the folder, optionally expunging the messages marked for deletion.
 		/// </remarks>
-		/// <param name="expunge">If set to <c>true</c>, expunge.</param>
+		/// <param name="expunge">If set to <see langword="true" />, expunge.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Close (bool expunge = false, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -426,8 +579,32 @@ namespace MailKit {
 		/// Asynchronously closes the folder, optionally expunging the messages marked for deletion.
 		/// </remarks>
 		/// <returns>An asynchronous task context.</returns>
-		/// <param name="expunge">If set to <c>true</c>, expunge.</param>
+		/// <param name="expunge">If set to <see langword="true" />, expunge.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task CloseAsync (bool expunge = false, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -438,8 +615,38 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>The created folder.</returns>
 		/// <param name="name">The name of the folder to create.</param>
-		/// <param name="isMessageFolder"><c>true</c> if the folder will be used to contain messages; otherwise, <c>false</c>.</param>
+		/// <param name="isMessageFolder"><see langword="true" /> if the folder will be used to contain messages; otherwise, <see langword="false" />.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="name"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="name"/> is empty.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The <see cref="DirectorySeparator"/> is nil, and thus child folders cannot be created.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IMailFolder Create (string name, bool isMessageFolder, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -450,8 +657,38 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>The created folder.</returns>
 		/// <param name="name">The name of the folder to create.</param>
-		/// <param name="isMessageFolder"><c>true</c> if the folder will be used to contain messages; otherwise, <c>false</c>.</param>
+		/// <param name="isMessageFolder"><see langword="true" /> if the folder will be used to contain messages; otherwise, <see langword="false" />.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="name"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="name"/> is empty.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The <see cref="DirectorySeparator"/> is nil, and thus child folders cannot be created.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IMailFolder> CreateAsync (string name, bool isMessageFolder, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -464,6 +701,41 @@ namespace MailKit {
 		/// <param name="name">The name of the folder to create.</param>
 		/// <param name="specialUses">A list of special uses for the folder being created.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="name"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="specialUses"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="name"/> is empty.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The <see cref="DirectorySeparator"/> is nil, and thus child folders cannot be created.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="MailService"/> does not support the creation of special folders.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IMailFolder Create (string name, IEnumerable<SpecialFolder> specialUses, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -476,6 +748,41 @@ namespace MailKit {
 		/// <param name="name">The name of the folder to create.</param>
 		/// <param name="specialUses">A list of special uses for the folder being created.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="name"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="specialUses"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="name"/> is empty.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The <see cref="DirectorySeparator"/> is nil, and thus child folders cannot be created.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="MailService"/> does not support the creation of special folders.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IMailFolder> CreateAsync (string name, IEnumerable<SpecialFolder> specialUses, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -488,6 +795,39 @@ namespace MailKit {
 		/// <param name="name">The name of the folder to create.</param>
 		/// <param name="specialUse">The special use for the folder being created.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="name"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="name"/> is empty.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The <see cref="DirectorySeparator"/> is nil, and thus child folders cannot be created.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="MailService"/> does not support the creation of special folders.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IMailFolder Create (string name, SpecialFolder specialUse, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -500,6 +840,39 @@ namespace MailKit {
 		/// <param name="name">The name of the folder to create.</param>
 		/// <param name="specialUse">The special use for the folder being created.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="name"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="name"/> is empty.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The <see cref="DirectorySeparator"/> is nil, and thus child folders cannot be created.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="MailService"/> does not support the creation of special folders.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IMailFolder> CreateAsync (string name, SpecialFolder specialUse, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -511,6 +884,43 @@ namespace MailKit {
 		/// <param name="parent">The new parent folder.</param>
 		/// <param name="name">The new name of the folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="parent"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="name"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="parent"/> does not belong to the <see cref="IMailStore"/>.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="name"/> is not a legal folder name.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The folder cannot be renamed (it is either a namespace or the Inbox).
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Rename (IMailFolder parent, string name, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -523,6 +933,43 @@ namespace MailKit {
 		/// <param name="parent">The new parent folder.</param>
 		/// <param name="name">The new name of the folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="parent"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="name"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="parent"/> does not belong to the <see cref="IMailStore"/>.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="name"/> is not a legal folder name.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The folder cannot be renamed (it is either a namespace or the Inbox).
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task RenameAsync (IMailFolder parent, string name, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -532,6 +979,33 @@ namespace MailKit {
 		/// Deletes the folder.
 		/// </remarks>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The folder cannot be deleted (it is either a namespace or the Inbox).
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Delete (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -542,6 +1016,33 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>An asynchronous task context.</returns>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The folder cannot be deleted (it is either a namespace or the Inbox).
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task DeleteAsync (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -551,6 +1052,27 @@ namespace MailKit {
 		/// Subscribes to the folder.
 		/// </remarks>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Subscribe (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -561,6 +1083,33 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>An asynchronous task context.</returns>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// The folder cannot be deleted (it is either a namespace or the Inbox).
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task SubscribeAsync (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -570,6 +1119,27 @@ namespace MailKit {
 		/// Unsubscribes from the folder.
 		/// </remarks>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Unsubscribe (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -580,6 +1150,27 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>An asynchronous task context.</returns>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task UnsubscribeAsync (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -594,8 +1185,29 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>The subfolders.</returns>
 		/// <param name="items">The status items to pre-populate.</param>
-		/// <param name="subscribedOnly">If set to <c>true</c>, only subscribed folders will be listed.</param>
+		/// <param name="subscribedOnly">If set to <see langword="true" />, only subscribed folders will be listed.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<IMailFolder> GetSubfolders (StatusItems items, bool subscribedOnly = false, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -609,8 +1221,29 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>The subfolders.</returns>
 		/// <param name="items">The status items to pre-populate.</param>
-		/// <param name="subscribedOnly">If set to <c>true</c>, only subscribed folders will be listed.</param>
+		/// <param name="subscribedOnly">If set to <see langword="true" />, only subscribed folders will be listed.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<IMailFolder>> GetSubfoldersAsync (StatusItems items, bool subscribedOnly = false, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -620,8 +1253,29 @@ namespace MailKit {
 		/// Gets the subfolders.
 		/// </remarks>
 		/// <returns>The subfolders.</returns>
-		/// <param name="subscribedOnly">If set to <c>true</c>, only subscribed folders will be listed.</param>
+		/// <param name="subscribedOnly">If set to <see langword="true" />, only subscribed folders will be listed.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<IMailFolder> GetSubfolders (bool subscribedOnly = false, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -631,8 +1285,29 @@ namespace MailKit {
 		/// Asynchronously gets the subfolders.
 		/// </remarks>
 		/// <returns>The subfolders.</returns>
-		/// <param name="subscribedOnly">If set to <c>true</c>, only subscribed folders will be listed.</param>
+		/// <param name="subscribedOnly">If set to <see langword="true" />, only subscribed folders will be listed.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<IMailFolder>> GetSubfoldersAsync (bool subscribedOnly = false, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -644,6 +1319,36 @@ namespace MailKit {
 		/// <returns>The subfolder.</returns>
 		/// <param name="name">The name of the subfolder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="name"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="name"/> is either an empty string or contains the <see cref="DirectorySeparator"/>.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The requested folder could not be found.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IMailFolder GetSubfolder (string name, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -655,6 +1360,36 @@ namespace MailKit {
 		/// <returns>The subfolder.</returns>
 		/// <param name="name">The name of the subfolder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="name"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="name"/> is either an empty string or contains the <see cref="DirectorySeparator"/>.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The requested folder could not be found.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IMailFolder> GetSubfolderAsync (string name, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -664,6 +1399,30 @@ namespace MailKit {
 		/// Forces the server to flush its state for the folder.
 		/// </remarks>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Check (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -674,6 +1433,30 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>An asynchronous task context.</returns>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task CheckAsync (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -691,6 +1474,33 @@ namespace MailKit {
 		/// </remarks>
 		/// <param name="items">The items to update.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the STATUS command.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Status (StatusItems items, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -709,6 +1519,33 @@ namespace MailKit {
 		/// <returns>An asynchronous task context.</returns>
 		/// <param name="items">The items to update.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the STATUS command.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task StatusAsync (StatusItems items, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -719,6 +1556,30 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>The access control list.</returns>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		AccessControlList GetAccessControlList (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -729,6 +1590,30 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>The access control list.</returns>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<AccessControlList> GetAccessControlListAsync (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -740,6 +1625,33 @@ namespace MailKit {
 		/// <returns>The access rights.</returns>
 		/// <param name="name">The identifier name.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="name"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		AccessRights GetAccessRights (string name, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -751,6 +1663,33 @@ namespace MailKit {
 		/// <returns>The access rights.</returns>
 		/// <param name="name">The identifier name.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="name"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<AccessRights> GetAccessRightsAsync (string name, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -761,6 +1700,30 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>The access rights.</returns>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		AccessRights GetMyAccessRights (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -771,6 +1734,30 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>The access rights.</returns>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<AccessRights> GetMyAccessRightsAsync (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -782,6 +1769,35 @@ namespace MailKit {
 		/// <param name="name">The identity name.</param>
 		/// <param name="rights">The access rights.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="name"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="rights"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void AddAccessRights (string name, AccessRights rights, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -794,6 +1810,35 @@ namespace MailKit {
 		/// <param name="name">The identity name.</param>
 		/// <param name="rights">The access rights.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="name"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="rights"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task AddAccessRightsAsync (string name, AccessRights rights, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -805,6 +1850,35 @@ namespace MailKit {
 		/// <param name="name">The identity name.</param>
 		/// <param name="rights">The access rights.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="name"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="rights"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void RemoveAccessRights (string name, AccessRights rights, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -817,6 +1891,35 @@ namespace MailKit {
 		/// <param name="name">The identity name.</param>
 		/// <param name="rights">The access rights.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="name"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="rights"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task RemoveAccessRightsAsync (string name, AccessRights rights, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -828,6 +1931,35 @@ namespace MailKit {
 		/// <param name="name">The identity name.</param>
 		/// <param name="rights">The access rights.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="name"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="rights"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void SetAccessRights (string name, AccessRights rights, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -840,6 +1972,35 @@ namespace MailKit {
 		/// <param name="name">The identity name.</param>
 		/// <param name="rights">The access rights.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="name"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="rights"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task SetAccessRightsAsync (string name, AccessRights rights, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -850,6 +2011,33 @@ namespace MailKit {
 		/// </remarks>
 		/// <param name="name">The identity name.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="name"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void RemoveAccess (string name, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -861,6 +2049,33 @@ namespace MailKit {
 		/// <returns>An asynchronous task context.</returns>
 		/// <param name="name">The identity name.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="name"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the ACL extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task RemoveAccessAsync (string name, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -873,6 +2088,30 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>The folder quota.</returns>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support quotas.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		FolderQuota GetQuota (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -885,6 +2124,30 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>The folder quota.</returns>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support quotas.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<FolderQuota> GetQuotaAsync (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -896,9 +2159,33 @@ namespace MailKit {
 		/// <see cref="IMailStore.SupportsQuotas"/> property.</para>
 		/// </remarks>
 		/// <returns>The updated folder quota.</returns>
-		/// <param name="messageLimit">If not <c>null</c>, sets the maximum number of messages to allow.</param>
-		/// <param name="storageLimit">If not <c>null</c>, sets the maximum storage size (in kilobytes).</param>
+		/// <param name="messageLimit">If not <see langword="null" />, sets the maximum number of messages to allow.</param>
+		/// <param name="storageLimit">If not <see langword="null" />, sets the maximum storage size (in kilobytes).</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support quotas.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		FolderQuota SetQuota (uint? messageLimit, uint? storageLimit, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -910,9 +2197,33 @@ namespace MailKit {
 		/// <see cref="IMailStore.SupportsQuotas"/> property.</para>
 		/// </remarks>
 		/// <returns>The updated folder quota.</returns>
-		/// <param name="messageLimit">If not <c>null</c>, sets the maximum number of messages to allow.</param>
-		/// <param name="storageLimit">If not <c>null</c>, sets the maximum storage size (in kilobytes).</param>
+		/// <param name="messageLimit">If not <see langword="null" />, sets the maximum number of messages to allow.</param>
+		/// <param name="storageLimit">If not <see langword="null" />, sets the maximum storage size (in kilobytes).</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support quotas.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<FolderQuota> SetQuotaAsync (uint? messageLimit, uint? storageLimit, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -924,6 +2235,30 @@ namespace MailKit {
 		/// <returns>The requested metadata value.</returns>
 		/// <param name="tag">The metadata tag.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The folder does not support metadata.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		string GetMetadata (MetadataTag tag, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -935,6 +2270,30 @@ namespace MailKit {
 		/// <returns>The requested metadata value.</returns>
 		/// <param name="tag">The metadata tag.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The folder does not support metadata.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<string> GetMetadataAsync (MetadataTag tag, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -946,6 +2305,33 @@ namespace MailKit {
 		/// <returns>The requested metadata.</returns>
 		/// <param name="tags">The metadata tags.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="tags"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The folder does not support metadata.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		MetadataCollection GetMetadata (IEnumerable<MetadataTag> tags, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -957,6 +2343,33 @@ namespace MailKit {
 		/// <returns>The requested metadata.</returns>
 		/// <param name="tags">The metadata tags.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="tags"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The folder does not support metadata.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<MetadataCollection> GetMetadataAsync (IEnumerable<MetadataTag> tags, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -969,6 +2382,35 @@ namespace MailKit {
 		/// <param name="options">The metadata options.</param>
 		/// <param name="tags">The metadata tags.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="options"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="tags"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The folder does not support metadata.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		MetadataCollection GetMetadata (MetadataOptions options, IEnumerable<MetadataTag> tags, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -981,6 +2423,35 @@ namespace MailKit {
 		/// <param name="options">The metadata options.</param>
 		/// <param name="tags">The metadata tags.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="options"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="tags"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The folder does not support metadata.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<MetadataCollection> GetMetadataAsync (MetadataOptions options, IEnumerable<MetadataTag> tags, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -991,6 +2462,33 @@ namespace MailKit {
 		/// </remarks>
 		/// <param name="metadata">The metadata.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="metadata"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The folder does not support metadata.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void SetMetadata (MetadataCollection metadata, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1002,6 +2500,33 @@ namespace MailKit {
 		/// <returns>An asynchronous task context.</returns>
 		/// <param name="metadata">The metadata.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="metadata"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The folder does not support metadata.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task SetMetadataAsync (MetadataCollection metadata, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1017,6 +2542,30 @@ namespace MailKit {
 		/// <see cref="MessageExpunged"/> event.</note>
 		/// </remarks>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Expunge (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1033,6 +2582,30 @@ namespace MailKit {
 		/// </remarks>
 		/// <returns>An asynchronous task context.</returns>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task ExpungeAsync (CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1049,6 +2622,36 @@ namespace MailKit {
 		/// </remarks>
 		/// <param name="uids">The message uids.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="uids"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Expunge (IList<UniqueId> uids, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1066,6 +2669,36 @@ namespace MailKit {
 		/// <returns>An asynchronous task context.</returns>
 		/// <param name="uids">The message uids.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="uids"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task ExpungeAsync (IList<UniqueId> uids, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1074,9 +2707,44 @@ namespace MailKit {
 		/// <remarks>
 		/// Appends a message to the folder and returns the UniqueId assigned to the message.
 		/// </remarks>
-		/// <returns>The UID of the appended message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the appended message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="request">The append request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// <para>-or-</para>
+		/// <para>The request included annotations but the folder does not support annotations.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		UniqueId? Append (IAppendRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1085,9 +2753,44 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously appends a message to the folder and returns the UniqueId assigned to the message.
 		/// </remarks>
-		/// <returns>The UID of the appended message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the appended message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="request">The append request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// <para>-or-</para>
+		/// <para>The request included annotations but the folder does not support annotations.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<UniqueId?> AppendAsync (IAppendRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1096,10 +2799,47 @@ namespace MailKit {
 		/// <remarks>
 		/// Appends a message to the folder and returns the UniqueId assigned to the message.
 		/// </remarks>
-		/// <returns>The UID of the appended message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the appended message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="options">The formatting options.</param>
 		/// <param name="request">The append request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="options"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// <para>-or-</para>
+		/// <para>The request included annotations but the folder does not support annotations.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		UniqueId? Append (FormatOptions options, IAppendRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1108,10 +2848,47 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously appends a message to the folder and returns the UniqueId assigned to the message.
 		/// </remarks>
-		/// <returns>The UID of the appended message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the appended message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="options">The formatting options.</param>
 		/// <param name="request">The append request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="options"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// <para>-or-</para>
+		/// <para>The request included annotations but the folder does not support annotations.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<UniqueId?> AppendAsync (FormatOptions options, IAppendRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1123,6 +2900,44 @@ namespace MailKit {
 		/// <returns>The UIDs of the appended messages, if available; otherwise, an empty array.</returns>
 		/// <param name="requests">The append requests.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="requests"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// One or more of the <paramref name="requests"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// <para>-or-</para>
+		/// <para>One ore more requests included annotations but the folder does not support annotations.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<UniqueId> Append (IList<IAppendRequest> requests, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1134,6 +2949,44 @@ namespace MailKit {
 		/// <returns>The UID of the appended message, if available; otherwise, an empty array.</returns>
 		/// <param name="requests">The append requests.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="requests"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// One or more of the <paramref name="requests"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// <para>-or-</para>
+		/// <para>One ore more requests included annotations but the folder does not support annotations.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<UniqueId>> AppendAsync (IList<IAppendRequest> requests, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1146,6 +2999,46 @@ namespace MailKit {
 		/// <param name="options">The formatting options.</param>
 		/// <param name="requests">The append requests.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="options"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="requests"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// One or more of the <paramref name="requests"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// <para>-or-</para>
+		/// <para>One ore more requests included annotations but the folder does not support annotations.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<UniqueId> Append (FormatOptions options, IList<IAppendRequest> requests, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1158,6 +3051,46 @@ namespace MailKit {
 		/// <param name="options">The formatting options.</param>
 		/// <param name="requests">The append requests.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="options"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="requests"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// One or more of the <paramref name="requests"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// <para>-or-</para>
+		/// <para>One ore more requests included annotations but the folder does not support annotations.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<UniqueId>> AppendAsync (FormatOptions options, IList<IAppendRequest> requests, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1166,10 +3099,48 @@ namespace MailKit {
 		/// <remarks>
 		/// Replaces a message in the folder and returns the UniqueId assigned to the new message.
 		/// </remarks>
-		/// <returns>The UID of the new message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the new message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="uid">The UID of the message to be replaced.</param>
 		/// <param name="request">The replace request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uid"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to this <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The server replied with a NO or BAD response.
+		/// </exception>
 		UniqueId? Replace (UniqueId uid, IReplaceRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1178,10 +3149,48 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously replaces a message in the folder and returns the UniqueId assigned to the new message.
 		/// </remarks>
-		/// <returns>The UID of the appended message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the appended message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="uid">The UID of the message to be replaced.</param>
 		/// <param name="request">The replace request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uid"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to this <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The server replied with a NO or BAD response.
+		/// </exception>
 		Task<UniqueId?> ReplaceAsync (UniqueId uid, IReplaceRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1190,11 +3199,54 @@ namespace MailKit {
 		/// <remarks>
 		/// Replaces a message in the folder and returns the UniqueId assigned to the new message.
 		/// </remarks>
-		/// <returns>The UID of the new message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the new message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="options">The formatting options.</param>
 		/// <param name="uid">The UID of the message to be replaced.</param>
 		/// <param name="request">The replace request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="options"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uid"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to this <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The server replied with a NO or BAD response.
+		/// </exception>
 		UniqueId? Replace (FormatOptions options, UniqueId uid, IReplaceRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1203,11 +3255,54 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously replaces a message in the folder and returns the UniqueId assigned to the new message.
 		/// </remarks>
-		/// <returns>The UID of the new message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the new message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="options">The formatting options.</param>
 		/// <param name="uid">The UID of the message to be replaced.</param>
 		/// <param name="request">The replace request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="options"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uid"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to this <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The server replied with a NO or BAD response.
+		/// </exception>
 		Task<UniqueId?> ReplaceAsync (FormatOptions options, UniqueId uid, IReplaceRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1216,10 +3311,49 @@ namespace MailKit {
 		/// <remarks>
 		/// Replaces a message in the folder and returns the UniqueId assigned to the new message.
 		/// </remarks>
-		/// <returns>The UID of the new message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the new message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="index">The index of the message to be replaced.</param>
 		/// <param name="request">The replace request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// The destination folder does not belong to this <see cref="IMailStore"/>.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The server replied with a NO or BAD response.
+		/// </exception>
 		UniqueId? Replace (int index, IReplaceRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1228,10 +3362,49 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously replaces a message in the folder and returns the UniqueId assigned to the new message.
 		/// </remarks>
-		/// <returns>The UID of the appended message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the appended message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="index">The index of the message to be replaced.</param>
 		/// <param name="request">The replace request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// The destination folder does not belong to this <see cref="IMailStore"/>.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The server replied with a NO or BAD response.
+		/// </exception>
 		Task<UniqueId?> ReplaceAsync (int index, IReplaceRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1240,11 +3413,55 @@ namespace MailKit {
 		/// <remarks>
 		/// Replaces a message in the folder and returns the UniqueId assigned to the new message.
 		/// </remarks>
-		/// <returns>The UID of the new message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the new message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="options">The formatting options.</param>
 		/// <param name="index">The index of the message to be replaced.</param>
 		/// <param name="request">The replace request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="options"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// The destination folder does not belong to this <see cref="IMailStore"/>.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The server replied with a NO or BAD response.
+		/// </exception>
 		UniqueId? Replace (FormatOptions options, int index, IReplaceRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1253,11 +3470,55 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously replaces a message in the folder and returns the UniqueId assigned to the new message.
 		/// </remarks>
-		/// <returns>The UID of the new message, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the new message, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="options">The formatting options.</param>
 		/// <param name="index">The index of the message to be replaced.</param>
 		/// <param name="request">The replace request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="options"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// The destination folder does not belong to this <see cref="IMailStore"/>.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Internationalized formatting was requested but has not been enabled.
+		/// </exception>
+		/// <exception cref="FolderNotFoundException">
+		/// The <see cref="MailFolder"/> does not exist.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>Internationalized formatting was requested but is not supported by the server.</para>
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The server replied with a NO or BAD response.
+		/// </exception>
 		Task<UniqueId?> ReplaceAsync (FormatOptions options, int index, IReplaceRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1266,10 +3527,45 @@ namespace MailKit {
 		/// <remarks>
 		/// Copies the specified message to the destination folder.
 		/// </remarks>
-		/// <returns>The UID of the message in the destination folder, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the message in the destination folder, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="uid">The UID of the message to copy.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="destination"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uid"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the UIDPLUS extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		UniqueId? CopyTo (UniqueId uid, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1278,10 +3574,45 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously copies the specified message to the destination folder.
 		/// </remarks>
-		/// <returns>The UID of the message in the destination folder, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the message in the destination folder, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="uid">The UID of the message to copy.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="destination"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uid"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the UIDPLUS extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<UniqueId?> CopyToAsync (UniqueId uid, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1294,6 +3625,43 @@ namespace MailKit {
 		/// <param name="uids">The UIDs of the messages to copy.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="destination"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the UIDPLUS extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		UniqueIdMap CopyTo (IList<UniqueId> uids, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1306,6 +3674,43 @@ namespace MailKit {
 		/// <param name="uids">The UIDs of the messages to copy.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="destination"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the UIDPLUS extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<UniqueIdMap> CopyToAsync (IList<UniqueId> uids, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1314,10 +3719,45 @@ namespace MailKit {
 		/// <remarks>
 		/// Moves the specified message to the destination folder.
 		/// </remarks>
-		/// <returns>The UID of the message in the destination folder, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the message in the destination folder, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="uid">The UID of the message to move.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="destination"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uid"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the UIDPLUS extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		UniqueId? MoveTo (UniqueId uid, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1326,10 +3766,45 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously moves the specified message to the destination folder.
 		/// </remarks>
-		/// <returns>The UID of the message in the destination folder, if available; otherwise, <c>null</c>.</returns>
+		/// <returns>The UID of the message in the destination folder, if available; otherwise, <see langword="null" />.</returns>
 		/// <param name="uid">The UID of the message to move.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="destination"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uid"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the UIDPLUS extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<UniqueId?> MoveToAsync (UniqueId uid, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1342,6 +3817,43 @@ namespace MailKit {
 		/// <param name="uids">The UIDs of the messages to copy.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="destination"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the UIDPLUS extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		UniqueIdMap MoveTo (IList<UniqueId> uids, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1354,6 +3866,43 @@ namespace MailKit {
 		/// <param name="uids">The UIDs of the messages to copy.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="destination"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The mail store does not support the UIDPLUS extension.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<UniqueIdMap> MoveToAsync (IList<UniqueId> uids, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1365,6 +3914,39 @@ namespace MailKit {
 		/// <param name="index">The index of the message to copy.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="destination"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> does not refer to a valid message index.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// The destination folder does not belong to the <see cref="IMailStore"/>.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void CopyTo (int index, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1377,6 +3959,39 @@ namespace MailKit {
 		/// <param name="index">The indexes of the message to copy.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="destination"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> does not refer to a valid message index.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// The destination folder does not belong to the <see cref="IMailStore"/>.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task CopyToAsync (int index, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1388,6 +4003,40 @@ namespace MailKit {
 		/// <param name="indexes">The indexes of the messages to copy.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="destination"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para>One or more of the <paramref name="indexes"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void CopyTo (IList<int> indexes, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1400,6 +4049,40 @@ namespace MailKit {
 		/// <param name="indexes">The indexes of the messages to copy.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="destination"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para>One or more of the <paramref name="indexes"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task CopyToAsync (IList<int> indexes, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1411,6 +4094,39 @@ namespace MailKit {
 		/// <param name="index">The index of the message to move.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="destination"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> does not refer to a valid message index.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// The destination folder does not belong to the <see cref="IMailStore"/>.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void MoveTo (int index, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1423,6 +4139,39 @@ namespace MailKit {
 		/// <param name="index">The index of the message to move.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="destination"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> does not refer to a valid message index.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// The destination folder does not belong to the <see cref="IMailStore"/>.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task MoveToAsync (int index, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1434,6 +4183,40 @@ namespace MailKit {
 		/// <param name="indexes">The indexes of the messages to move.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="destination"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para>One or more of the <paramref name="indexes"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void MoveTo (IList<int> indexes, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1446,6 +4229,40 @@ namespace MailKit {
 		/// <param name="indexes">The indexes of the messages to move.</param>
 		/// <param name="destination">The destination folder.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="destination"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para>One or more of the <paramref name="indexes"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para>The destination folder does not belong to the <see cref="IMailStore"/>.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task MoveToAsync (IList<int> indexes, IMailFolder destination, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1467,6 +4284,38 @@ namespace MailKit {
 		/// <param name="uids">The UIDs.</param>
 		/// <param name="request">The fetch request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<IMessageSummary> Fetch (IList<UniqueId> uids, IFetchRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1486,6 +4335,38 @@ namespace MailKit {
 		/// <param name="uids">The UIDs.</param>
 		/// <param name="request">The fetch request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<IMessageSummary>> FetchAsync (IList<UniqueId> uids, IFetchRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1504,6 +4385,38 @@ namespace MailKit {
 		/// <param name="indexes">The indexes.</param>
 		/// <param name="request">The fetch request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="indexes"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<IMessageSummary> Fetch (IList<int> indexes, IFetchRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1523,6 +4436,38 @@ namespace MailKit {
 		/// <param name="indexes">The indexes.</param>
 		/// <param name="request">The fetch request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="indexes"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<IMessageSummary>> FetchAsync (IList<int> indexes, IFetchRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1543,6 +4488,38 @@ namespace MailKit {
 		/// <param name="max">The maximum index, or <c>-1</c> to specify no upper bound.</param>
 		/// <param name="request">The fetch request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="min"/> is out of range.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="max"/> is out of range.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<IMessageSummary> Fetch (int min, int max, IFetchRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1563,6 +4540,38 @@ namespace MailKit {
 		/// <param name="max">The maximum index, or <c>-1</c> to specify no upper bound.</param>
 		/// <param name="request">The fetch request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="min"/> is out of range.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="max"/> is out of range.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<IMessageSummary>> FetchAsync (int min, int max, IFetchRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -1575,6 +4584,36 @@ namespace MailKit {
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message headers.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		HeaderList GetHeaders (UniqueId uid, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1587,6 +4626,36 @@ namespace MailKit {
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message headers.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<HeaderList> GetHeadersAsync (UniqueId uid, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1600,6 +4669,39 @@ namespace MailKit {
 		/// <param name="part">The body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested body part headers.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		HeaderList GetHeaders (UniqueId uid, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1613,6 +4715,39 @@ namespace MailKit {
 		/// <param name="part">The body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested body part headers.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<HeaderList> GetHeadersAsync (UniqueId uid, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1625,6 +4760,36 @@ namespace MailKit {
 		/// <param name="index">The index of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message headers.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		HeaderList GetHeaders (int index, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1637,6 +4802,36 @@ namespace MailKit {
 		/// <param name="index">The index of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message headers.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<HeaderList> GetHeadersAsync (int index, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1650,6 +4845,39 @@ namespace MailKit {
 		/// <param name="part">The body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested body part headers.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		HeaderList GetHeaders (int index, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1663,6 +4891,39 @@ namespace MailKit {
 		/// <param name="part">The body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested body part headers.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<HeaderList> GetHeadersAsync (int index, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1678,6 +4939,36 @@ namespace MailKit {
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		MimeMessage GetMessage (UniqueId uid, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1693,6 +4984,36 @@ namespace MailKit {
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<MimeMessage> GetMessageAsync (UniqueId uid, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1708,6 +5029,36 @@ namespace MailKit {
 		/// <param name="index">The index of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		MimeMessage GetMessage (int index, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1723,6 +5074,36 @@ namespace MailKit {
 		/// <param name="index">The index of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<MimeMessage> GetMessageAsync (int index, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1739,6 +5120,39 @@ namespace MailKit {
 		/// <param name="part">The body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message body.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		MimeEntity GetBodyPart (UniqueId uid, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1755,6 +5169,39 @@ namespace MailKit {
 		/// <param name="part">The body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message body.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<MimeEntity> GetBodyPartAsync (UniqueId uid, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1768,6 +5215,39 @@ namespace MailKit {
 		/// <param name="part">The body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message body.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		MimeEntity GetBodyPart (int index, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1781,6 +5261,39 @@ namespace MailKit {
 		/// <param name="part">The body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message body.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<MimeEntity> GetBodyPartAsync (int index, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1796,6 +5309,36 @@ namespace MailKit {
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (UniqueId uid, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1811,6 +5354,36 @@ namespace MailKit {
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (UniqueId uid, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1826,6 +5399,36 @@ namespace MailKit {
 		/// <param name="index">The index of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="index"/> is out of range.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (int index, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1841,6 +5444,36 @@ namespace MailKit {
 		/// <param name="index">The index of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="index"/> is out of range.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (int index, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1858,6 +5491,41 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (UniqueId uid, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1875,6 +5543,41 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (UniqueId uid, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1892,6 +5595,40 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="index"/> is out of range.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (int index, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1909,6 +5646,40 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="index"/> is out of range.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (int index, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1925,6 +5696,39 @@ namespace MailKit {
 		/// <param name="part">The desired body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (UniqueId uid, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1941,6 +5745,39 @@ namespace MailKit {
 		/// <param name="part">The desired body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (UniqueId uid, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1954,6 +5791,39 @@ namespace MailKit {
 		/// <param name="part">The desired body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="index"/> is out of range.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (int index, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1967,6 +5837,39 @@ namespace MailKit {
 		/// <param name="part">The desired body part.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="index"/> is out of range.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (int index, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -1985,6 +5888,44 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (UniqueId uid, BodyPart part, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2003,6 +5944,44 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (UniqueId uid, BodyPart part, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2021,6 +6000,43 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="index"/> is out of range.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (int index, BodyPart part, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2039,6 +6055,43 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="part"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="index"/> is out of range.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (int index, BodyPart part, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2057,6 +6110,39 @@ namespace MailKit {
 		/// <param name="section">The desired section of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="section"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (UniqueId uid, string section, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2075,6 +6161,39 @@ namespace MailKit {
 		/// <param name="section">The desired section of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="section"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (UniqueId uid, string section, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2095,6 +6214,44 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="section"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (UniqueId uid, string section, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2115,6 +6272,44 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="section"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (UniqueId uid, string section, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2130,6 +6325,39 @@ namespace MailKit {
 		/// <param name="section">The desired section of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="section"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (int index, string section, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2145,6 +6373,39 @@ namespace MailKit {
 		/// <param name="section">The desired section of the message.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="section"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is out of range.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (int index, string section, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2165,6 +6426,43 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="section"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="index"/> is out of range.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Stream GetStream (int index, string section, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2185,6 +6483,43 @@ namespace MailKit {
 		/// <param name="count">The number of bytes desired.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="section"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <para><paramref name="index"/> is out of range.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="offset"/> is negative.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="count"/> is negative.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="MessageNotFoundException">
+		/// The <see cref="IMailStore"/> did not return the requested message stream.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<Stream> GetStreamAsync (int index, string section, int offset, int count, CancellationToken cancellationToken = default, ITransferProgress progress = null);
 
 		/// <summary>
@@ -2193,10 +6528,44 @@ namespace MailKit {
 		/// <remarks>
 		/// Updates the message flags and keywords for a message.
 		/// </remarks>
-		/// <returns><c>true</c> if the store operation was successful; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the store operation was successful; otherwise, <see langword="false" />.</returns>
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="request">The message flags and keywords to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		bool Store (UniqueId uid, IStoreFlagsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2205,10 +6574,44 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously updates the message flags and keywords for a message.
 		/// </remarks>
-		/// <returns><c>true</c> if the store operation was successful; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the store operation was successful; otherwise, <see langword="false" />.</returns>
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="request">The message flags and keywords to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<bool> StoreAsync (UniqueId uid, IStoreFlagsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2221,6 +6624,42 @@ namespace MailKit {
 		/// <param name="uids">The message UIDs.</param>
 		/// <param name="request">The message flags and keywords to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<UniqueId> Store (IList<UniqueId> uids, IStoreFlagsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2233,6 +6672,42 @@ namespace MailKit {
 		/// <param name="uids">The message UIDs.</param>
 		/// <param name="request">The message flags and keywords to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<UniqueId>> StoreAsync (IList<UniqueId> uids, IStoreFlagsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2241,10 +6716,44 @@ namespace MailKit {
 		/// <remarks>
 		/// Updates the message flags and keywords for a message.
 		/// </remarks>
-		/// <returns><c>true</c> if the store operation was successful; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the store operation was successful; otherwise, <see langword="false" />.</returns>
 		/// <param name="index">The index of the message.</param>
 		/// <param name="request">The message flags and keywords to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="index"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		bool Store (int index, IStoreFlagsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2253,10 +6762,44 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously updates the message flags and keywords for a message.
 		/// </remarks>
-		/// <returns><c>true</c> if the store operation was successful; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the store operation was successful; otherwise, <see langword="false" />.</returns>
 		/// <param name="index">The index of the message.</param>
 		/// <param name="request">The message flags and keywords to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="index"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<bool> StoreAsync (int index, IStoreFlagsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2269,6 +6812,42 @@ namespace MailKit {
 		/// <param name="indexes">The message indexes.</param>
 		/// <param name="request">The message flags and keywords to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="indexes"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<int> Store (IList<int> indexes, IStoreFlagsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2281,6 +6860,42 @@ namespace MailKit {
 		/// <param name="indexes">The message indexes.</param>
 		/// <param name="request">The message flags and keywords to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="indexes"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<int>> StoreAsync (IList<int> indexes, IStoreFlagsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2289,10 +6904,46 @@ namespace MailKit {
 		/// <remarks>
 		/// Updates the GMail-style labels for a message.
 		/// </remarks>
-		/// <returns><c>true</c> if the store operation was successful; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the store operation was successful; otherwise, <see langword="false" />.</returns>
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="request">The labels to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The folder does not support storing labels.</para>
+		/// <para>-or-</para>
+		/// <para>The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		bool Store (UniqueId uid, IStoreLabelsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2301,10 +6952,46 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously updates the GMail-style labels for a message.
 		/// </remarks>
-		/// <returns><c>true</c> if the store operation was successful; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the store operation was successful; otherwise, <see langword="false" />.</returns>
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="request">The labels to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The folder does not support storing labels.</para>
+		/// <para>-or-</para>
+		/// <para>The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<bool> StoreAsync (UniqueId uid, IStoreLabelsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2317,6 +7004,44 @@ namespace MailKit {
 		/// <param name="uids">The message UIDs.</param>
 		/// <param name="request">The labels to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The folder does not support storing labels.</para>
+		/// <para>-or-</para>
+		/// <para>The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<UniqueId> Store (IList<UniqueId> uids, IStoreLabelsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2329,6 +7054,44 @@ namespace MailKit {
 		/// <param name="uids">The message UIDs.</param>
 		/// <param name="request">The labels to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The folder does not support storing labels.</para>
+		/// <para>-or-</para>
+		/// <para>The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<UniqueId>> StoreAsync (IList<UniqueId> uids, IStoreLabelsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2337,10 +7100,46 @@ namespace MailKit {
 		/// <remarks>
 		/// Updates the GMail-style labels for a message.
 		/// </remarks>
-		/// <returns><c>true</c> if the store operation was successful; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the store operation was successful; otherwise, <see langword="false" />.</returns>
 		/// <param name="index">The index of the message.</param>
 		/// <param name="request">The labels to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="index"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The folder does not support storing labels.</para>
+		/// <para>-or-</para>
+		/// <para>The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		bool Store (int index, IStoreLabelsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2349,10 +7148,46 @@ namespace MailKit {
 		/// <remarks>
 		/// Asynchronously updates the GMail-style labels for a message.
 		/// </remarks>
-		/// <returns><c>true</c> if the store operation was successful; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the store operation was successful; otherwise, <see langword="false" />.</returns>
 		/// <param name="index">The index of the message.</param>
 		/// <param name="request">The labels to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="index"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="request"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The folder does not support storing labels.</para>
+		/// <para>-or-</para>
+		/// <para>The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<bool> StoreAsync (int index, IStoreLabelsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2365,6 +7200,44 @@ namespace MailKit {
 		/// <param name="indexes">The message indexes.</param>
 		/// <param name="request">The labels to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="indexes"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The folder does not support storing labels.</para>
+		/// <para>-or-</para>
+		/// <para>The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<int> Store (IList<int> indexes, IStoreLabelsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2377,6 +7250,44 @@ namespace MailKit {
 		/// <param name="indexes">The message indexes.</param>
 		/// <param name="request">The labels to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="indexes"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The folder does not support storing labels.</para>
+		/// <para>-or-</para>
+		/// <para>The <paramref name="request"/> specified an <see cref="IStoreRequest.UnchangedSince"/>
+		/// value but the folder does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<int>> StoreAsync (IList<int> indexes, IStoreLabelsRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2388,6 +7299,42 @@ namespace MailKit {
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="annotations"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="IMailFolder"/> does not support annotations.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Store (UniqueId uid, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2400,6 +7347,42 @@ namespace MailKit {
 		/// <param name="uid">The UID of the message.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="annotations"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="uid"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="IMailFolder"/> does not support annotations.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task StoreAsync (UniqueId uid, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2411,6 +7394,44 @@ namespace MailKit {
 		/// <param name="uids">The UIDs of the messages.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="annotations"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="IMailFolder"/> does not support annotations.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Store (IList<UniqueId> uids, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2423,6 +7444,44 @@ namespace MailKit {
 		/// <param name="uids">The UIDs of the messages.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="annotations"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="IMailFolder"/> does not support annotations.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task StoreAsync (IList<UniqueId> uids, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2436,6 +7495,46 @@ namespace MailKit {
 		/// <param name="modseq">The mod-sequence value.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="annotations"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The <see cref="IMailFolder"/> does not support annotations.</para>
+		/// <para>-or-</para>
+		/// <para>The <see cref="IMailFolder"/> does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<UniqueId> Store (IList<UniqueId> uids, ulong modseq, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2449,6 +7548,46 @@ namespace MailKit {
 		/// <param name="modseq">The mod-sequence value.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="annotations"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="uids"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The <see cref="IMailFolder"/> does not support annotations.</para>
+		/// <para>-or-</para>
+		/// <para>The <see cref="IMailFolder"/> does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<UniqueId>> StoreAsync (IList<UniqueId> uids, ulong modseq, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2460,6 +7599,42 @@ namespace MailKit {
 		/// <param name="index">The index of the message.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="annotations"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="index"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="IMailFolder"/> does not support annotations.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Store (int index, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2472,6 +7647,42 @@ namespace MailKit {
 		/// <param name="index">The indexes of the message.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="annotations"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="index"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="IMailFolder"/> does not support annotations.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task StoreAsync (int index, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2483,6 +7694,44 @@ namespace MailKit {
 		/// <param name="indexes">The indexes of the messages.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="annotations"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="indexes"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="IMailFolder"/> does not support annotations.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		void Store (IList<int> indexes, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2495,6 +7744,44 @@ namespace MailKit {
 		/// <param name="indexes">The indexes of the messages.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="annotations"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="indexes"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// The <see cref="IMailFolder"/> does not support annotations.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task StoreAsync (IList<int> indexes, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2508,6 +7795,46 @@ namespace MailKit {
 		/// <param name="modseq">The mod-sequence value.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="annotations"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="indexes"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The <see cref="IMailFolder"/> does not support annotations.</para>
+		/// <para>-or-</para>
+		/// <para>The <see cref="IMailFolder"/> does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<int> Store (IList<int> indexes, ulong modseq, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2521,6 +7848,46 @@ namespace MailKit {
 		/// <param name="modseq">The mod-sequence value.</param>
 		/// <param name="annotations">The annotations to store.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="annotations"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// One or more of the <paramref name="indexes"/> is invalid.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="IMailFolder"/> is not currently open in read-write mode.
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// Cannot store annotations without any properties defined.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>The <see cref="IMailFolder"/> does not support annotations.</para>
+		/// <para>-or-</para>
+		/// <para>The <see cref="IMailFolder"/> does not support mod-sequences.</para>
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<int>> StoreAsync (IList<int> indexes, ulong modseq, IList<Annotation> annotations, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2533,6 +7900,36 @@ namespace MailKit {
 		/// <returns>An array of matching UIDs.</returns>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="query"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// One or more search terms in the <paramref name="query"/> are not supported by the mail store.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<UniqueId> Search (SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2545,6 +7942,36 @@ namespace MailKit {
 		/// <returns>An array of matching UIDs.</returns>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="query"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// One or more search terms in the <paramref name="query"/> are not supported by the mail store.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<UniqueId>> SearchAsync (SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2558,6 +7985,43 @@ namespace MailKit {
 		/// <param name="uids">The subset of UIDs</param>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uids"/> is empty.</para>
+		/// <para>-or-</para>
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// One or more search terms in the <paramref name="query"/> are not supported by the mail store.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<UniqueId> Search (IList<UniqueId> uids, SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2571,6 +8035,43 @@ namespace MailKit {
 		/// <param name="uids">The subset of UIDs</param>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uids"/> is empty.</para>
+		/// <para>-or-</para>
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// One or more search terms in the <paramref name="query"/> are not supported by the mail store.
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<UniqueId>> SearchAsync (IList<UniqueId> uids, SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2584,6 +8085,38 @@ namespace MailKit {
 		/// <param name="options">The search options.</param>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="query"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support the specified search options.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		SearchResults Search (SearchOptions options, SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2597,6 +8130,38 @@ namespace MailKit {
 		/// <param name="options">The search options.</param>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="query"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support the specified search options.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<SearchResults> SearchAsync (SearchOptions options, SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2611,6 +8176,45 @@ namespace MailKit {
 		/// <param name="uids">The subset of UIDs</param>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uids"/> is empty.</para>
+		/// <para>-or-</para>
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support the specified search options.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		SearchResults Search (SearchOptions options, IList<UniqueId> uids, SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2625,6 +8229,45 @@ namespace MailKit {
 		/// <param name="uids">The subset of UIDs</param>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uids"/> is empty.</para>
+		/// <para>-or-</para>
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support the specified search options.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<SearchResults> SearchAsync (SearchOptions options, IList<UniqueId> uids, SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2638,6 +8281,43 @@ namespace MailKit {
 		/// <param name="query">The search query.</param>
 		/// <param name="orderBy">The sort order.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="orderBy"/> is empty.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support sorting search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<UniqueId> Sort (SearchQuery query, IList<OrderBy> orderBy, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2651,6 +8331,43 @@ namespace MailKit {
 		/// <param name="query">The search query.</param>
 		/// <param name="orderBy">The sort order.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="orderBy"/> is empty.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support sorting search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<UniqueId>> SortAsync (SearchQuery query, IList<OrderBy> orderBy, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2665,6 +8382,49 @@ namespace MailKit {
 		/// <param name="query">The search query.</param>
 		/// <param name="orderBy">The sort order.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uids"/> is empty.</para>
+		/// <para>-or-</para>
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is empty.</para>
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support sorting search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<UniqueId> Sort (IList<UniqueId> uids, SearchQuery query, IList<OrderBy> orderBy, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2679,6 +8439,49 @@ namespace MailKit {
 		/// <param name="query">The search query.</param>
 		/// <param name="orderBy">The sort order.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uids"/> is empty.</para>
+		/// <para>-or-</para>
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is empty.</para>
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support sorting search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<UniqueId>> SortAsync (IList<UniqueId> uids, SearchQuery query, IList<OrderBy> orderBy, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2692,6 +8495,45 @@ namespace MailKit {
 		/// <param name="query">The search query.</param>
 		/// <param name="orderBy">The sort order.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="orderBy"/> is empty.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support the specified search options.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support sorting search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		SearchResults Sort (SearchOptions options, SearchQuery query, IList<OrderBy> orderBy, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2705,6 +8547,45 @@ namespace MailKit {
 		/// <param name="query">The search query.</param>
 		/// <param name="orderBy">The sort order.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <paramref name="orderBy"/> is empty.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support the specified search options.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support sorting search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The <see cref="MailFolder"/> is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<SearchResults> SortAsync (SearchOptions options, SearchQuery query, IList<OrderBy> orderBy, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2719,6 +8600,51 @@ namespace MailKit {
 		/// <param name="query">The search query.</param>
 		/// <param name="orderBy">The sort order.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uids"/> is empty.</para>
+		/// <para>-or-</para>
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is empty.</para>
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support the specified search options.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support sorting search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		SearchResults Sort (SearchOptions options, IList<UniqueId> uids, SearchQuery query, IList<OrderBy> orderBy, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2734,6 +8660,51 @@ namespace MailKit {
 		/// <param name="query">The search query.</param>
 		/// <param name="orderBy">The sort order.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uids"/> is empty.</para>
+		/// <para>-or-</para>
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="orderBy"/> is empty.</para>
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support the specified search options.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support sorting search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<SearchResults> SortAsync (SearchOptions options, IList<UniqueId> uids, SearchQuery query, IList<OrderBy> orderBy, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2747,6 +8718,41 @@ namespace MailKit {
 		/// <param name="algorithm">The threading algorithm to use.</param>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="algorithm"/> is not supported.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="query"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support threading search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<MessageThread> Thread (ThreadingAlgorithm algorithm, SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2760,6 +8766,41 @@ namespace MailKit {
 		/// <param name="algorithm">The threading algorithm to use.</param>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="algorithm"/> is not supported.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="query"/> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support threading search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<MessageThread>> ThreadAsync (ThreadingAlgorithm algorithm, SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2774,6 +8815,48 @@ namespace MailKit {
 		/// <param name="algorithm">The threading algorithm to use.</param>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="algorithm"/> is not supported.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uids"/> is empty.</para>
+		/// <para>-or-</para>
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support threading search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		IList<MessageThread> Thread (IList<UniqueId> uids, ThreadingAlgorithm algorithm, SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -2788,6 +8871,48 @@ namespace MailKit {
 		/// <param name="algorithm">The threading algorithm to use.</param>
 		/// <param name="query">The search query.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="algorithm"/> is not supported.
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
+		/// <para>-or-</para>
+		/// <para><paramref name="query"/> is <see langword="null" />.</para>
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// <para><paramref name="uids"/> is empty.</para>
+		/// <para>-or-</para>
+		/// <para>One or more of the <paramref name="uids"/> is invalid.</para>
+		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// <para>One or more search terms in the <paramref name="query"/> are not supported.</para>
+		/// <para>-or-</para>
+		/// <para>The server does not support threading search results.</para>
+		/// </exception>
+		/// <exception cref="System.ObjectDisposedException">
+		/// The <see cref="IMailStore"/> has been disposed.
+		/// </exception>
+		/// <exception cref="ServiceNotConnectedException">
+		/// The <see cref="IMailStore"/> is not connected.
+		/// </exception>
+		/// <exception cref="ServiceNotAuthenticatedException">
+		/// The <see cref="IMailStore"/> is not authenticated.
+		/// </exception>
+		/// <exception cref="FolderNotOpenException">
+		/// The folder is not currently open.
+		/// </exception>
+		/// <exception cref="System.OperationCanceledException">
+		/// The operation was canceled via the cancellation token.
+		/// </exception>
+		/// <exception cref="System.IO.IOException">
+		/// An I/O error occurred.
+		/// </exception>
+		/// <exception cref="ProtocolException">
+		/// The server's response contained unexpected tokens.
+		/// </exception>
+		/// <exception cref="CommandException">
+		/// The command failed.
+		/// </exception>
 		Task<IList<MessageThread>> ThreadAsync (IList<UniqueId> uids, ThreadingAlgorithm algorithm, SearchQuery query, CancellationToken cancellationToken = default);
 
 		/// <summary>

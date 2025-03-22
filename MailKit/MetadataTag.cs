@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -77,7 +77,7 @@ namespace MailKit {
 		/// </remarks>
 		/// <param name="id">The metadata tag identifier.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="id"/> is <c>null</c>.
+		/// <paramref name="id"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// <paramref name="id"/> is an empty string.
@@ -111,8 +111,8 @@ namespace MailKit {
 		/// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="MailKit.MetadataTag"/>.
 		/// </remarks>
 		/// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="MailKit.MetadataTag"/>.</param>
-		/// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
-		/// <see cref="MailKit.MetadataTag"/>; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the specified <see cref="System.Object"/> is equal to the current
+		/// <see cref="MailKit.MetadataTag"/>; otherwise, <see langword="false" />.</returns>
 		public override bool Equals (object obj)
 		{
 			return obj is MetadataTag tag && tag.Id == Id;

@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -1146,9 +1146,9 @@ namespace MailKit.Net.Imap
 		/// <param name="request">The fetch request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="uids"/> is <c>null</c>.</para>
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="request"/> is <c>null</c>.</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// One or more of the <paramref name="uids"/> is invalid.
@@ -1231,9 +1231,9 @@ namespace MailKit.Net.Imap
 		/// <param name="request">The fetch request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="uids"/> is <c>null</c>.</para>
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="request"/> is <c>null</c>.</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// One or more of the <paramref name="uids"/> is invalid.
@@ -1351,9 +1351,9 @@ namespace MailKit.Net.Imap
 		/// <param name="request">The fetch request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="indexes"/> is <c>null</c>.</para>
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="request"/> is <c>null</c>.</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// One or more of the <paramref name="indexes"/> is invalid.
@@ -1420,9 +1420,9 @@ namespace MailKit.Net.Imap
 		/// <param name="request">The fetch request.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="indexes"/> is <c>null</c>.</para>
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="request"/> is <c>null</c>.</para>
+		/// <para><paramref name="request"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// One or more of the <paramref name="indexes"/> is invalid.
@@ -1550,7 +1550,7 @@ namespace MailKit.Net.Imap
 		/// <para><paramref name="max"/> is out of range.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="request"/> is <c>null</c>.
+		/// <paramref name="request"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="ImapClient"/> has been disposed.
@@ -1621,7 +1621,7 @@ namespace MailKit.Net.Imap
 		/// <para><paramref name="max"/> is out of range.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="request"/> is <c>null</c>.
+		/// <paramref name="request"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="ImapClient"/> has been disposed.
@@ -2661,7 +2661,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="partSpecifier"/> is <c>null</c>.
+		/// <paramref name="partSpecifier"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// <paramref name="uid"/> is invalid.
@@ -2721,7 +2721,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="partSpecifier"/> is <c>null</c>.
+		/// <paramref name="partSpecifier"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// <paramref name="uid"/> is invalid.
@@ -2781,7 +2781,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="part"/> is <c>null</c>.
+		/// <paramref name="part"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// <paramref name="uid"/> is invalid.
@@ -2836,7 +2836,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="part"/> is <c>null</c>.
+		/// <paramref name="part"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// <paramref name="uid"/> is invalid.
@@ -3058,7 +3058,7 @@ namespace MailKit.Net.Imap
 		/// <paramref name="index"/> is out of range.
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="partSpecifier"/> is <c>null</c>.
+		/// <paramref name="partSpecifier"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="ImapClient"/> has been disposed.
@@ -3118,7 +3118,7 @@ namespace MailKit.Net.Imap
 		/// <paramref name="index"/> is out of range.
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="partSpecifier"/> is <c>null</c>.
+		/// <paramref name="partSpecifier"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="ImapClient"/> has been disposed.
@@ -3178,7 +3178,7 @@ namespace MailKit.Net.Imap
 		/// <paramref name="index"/> is out of range.
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="part"/> is <c>null</c>.
+		/// <paramref name="part"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="ImapClient"/> has been disposed.
@@ -3233,7 +3233,7 @@ namespace MailKit.Net.Imap
 		/// <paramref name="index"/> is out of range.
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="part"/> is <c>null</c>.
+		/// <paramref name="part"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="ImapClient"/> has been disposed.
@@ -3603,7 +3603,9 @@ namespace MailKit.Net.Imap
 		/// Get the specified body part.
 		/// </summary>
 		/// <remarks>
-		/// Gets the specified body part.
+		/// <para>Gets the specified body part.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="partSpecifier"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <example>
 		/// <code language="c#" source="Examples\ImapBodyPartExamples.cs" region="GetBodyPartsByUniqueIdAndSpecifier"/>
@@ -3614,7 +3616,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="partSpecifier"/> is <c>null</c>.
+		/// <paramref name="partSpecifier"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// <paramref name="uid"/> is invalid.
@@ -3672,7 +3674,9 @@ namespace MailKit.Net.Imap
 		/// Asynchronously get the specified body part.
 		/// </summary>
 		/// <remarks>
-		/// Gets the specified body part.
+		/// <para>Gets the specified body part.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="partSpecifier"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <example>
 		/// <code language="c#" source="Examples\ImapBodyPartExamples.cs" region="GetBodyPartsByUniqueIdAndSpecifier"/>
@@ -3683,7 +3687,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="partSpecifier"/> is <c>null</c>.
+		/// <paramref name="partSpecifier"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// <paramref name="uid"/> is invalid.
@@ -3752,7 +3756,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="part"/> is <c>null</c>.
+		/// <paramref name="part"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// <paramref name="uid"/> is invalid.
@@ -3810,7 +3814,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="part"/> is <c>null</c>.
+		/// <paramref name="part"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// <paramref name="uid"/> is invalid.
@@ -3902,7 +3906,9 @@ namespace MailKit.Net.Imap
 		/// Get the specified body part.
 		/// </summary>
 		/// <remarks>
-		/// Gets the specified body part.
+		/// <para>Gets the specified body part.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="partSpecifier"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <returns>The body part.</returns>
 		/// <param name="index">The index of the message.</param>
@@ -3910,7 +3916,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="partSpecifier"/> is <c>null</c>.
+		/// <paramref name="partSpecifier"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="index"/> is out of range.
@@ -3968,7 +3974,9 @@ namespace MailKit.Net.Imap
 		/// Asynchronously get the specified body part.
 		/// </summary>
 		/// <remarks>
-		/// Gets the specified body part.
+		/// <para>Gets the specified body part.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="partSpecifier"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <returns>The body part.</returns>
 		/// <param name="index">The index of the message.</param>
@@ -3976,7 +3984,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="partSpecifier"/> is <c>null</c>.
+		/// <paramref name="partSpecifier"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="index"/> is out of range.
@@ -4042,7 +4050,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="part"/> is <c>null</c>.
+		/// <paramref name="part"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="index"/> is out of range.
@@ -4097,7 +4105,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="part"/> is <c>null</c>.
+		/// <paramref name="part"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="index"/> is out of range.
@@ -4521,8 +4529,8 @@ namespace MailKit.Net.Imap
 		/// </summary>
 		/// <remarks>
 		/// <para>Gets a substream of the specified message.</para>
-		/// <para>For more information about how to construct the <paramref name="section"/>,
-		/// see Section 6.4.5 of RFC3501.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="section"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <example>
 		/// <code language="c#" source="Examples\ImapBodyPartExamples.cs" region="GetBodyPartStreamsByUniqueIdAndSpecifier"/>
@@ -4536,7 +4544,7 @@ namespace MailKit.Net.Imap
 		/// <paramref name="uid"/> is invalid.
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="section"/> is <c>null</c>.
+		/// <paramref name="section"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="ImapClient"/> has been disposed.
@@ -4586,8 +4594,8 @@ namespace MailKit.Net.Imap
 		/// </summary>
 		/// <remarks>
 		/// <para>Gets a substream of the specified message.</para>
-		/// <para>For more information about how to construct the <paramref name="section"/>,
-		/// see Section 6.4.5 of RFC3501.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="section"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <example>
 		/// <code language="c#" source="Examples\ImapBodyPartExamples.cs" region="GetBodyPartStreamsByUniqueIdAndSpecifier"/>
@@ -4601,7 +4609,7 @@ namespace MailKit.Net.Imap
 		/// <paramref name="uid"/> is invalid.
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="section"/> is <c>null</c>.
+		/// <paramref name="section"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="ImapClient"/> has been disposed.
@@ -4686,8 +4694,8 @@ namespace MailKit.Net.Imap
 		/// the end of the specified section of the message, an empty stream is returned. If
 		/// the number of bytes desired extends beyond the end of the section, a truncated
 		/// stream will be returned.</para>
-		/// <para>For more information about how to construct the <paramref name="section"/>,
-		/// see Section 6.4.5 of RFC3501.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="section"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <returns>The stream.</returns>
 		/// <param name="uid">The UID of the message.</param>
@@ -4700,7 +4708,7 @@ namespace MailKit.Net.Imap
 		/// <paramref name="uid"/> is invalid.
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="section"/> is <c>null</c>.
+		/// <paramref name="section"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <para><paramref name="offset"/> is negative.</para>
@@ -4762,8 +4770,8 @@ namespace MailKit.Net.Imap
 		/// the end of the specified section of the message, an empty stream is returned. If
 		/// the number of bytes desired extends beyond the end of the section, a truncated
 		/// stream will be returned.</para>
-		/// <para>For more information about how to construct the <paramref name="section"/>,
-		/// see Section 6.4.5 of RFC3501.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="section"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <returns>The stream.</returns>
 		/// <param name="uid">The UID of the message.</param>
@@ -4776,7 +4784,7 @@ namespace MailKit.Net.Imap
 		/// <paramref name="uid"/> is invalid.
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="section"/> is <c>null</c>.
+		/// <paramref name="section"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <para><paramref name="offset"/> is negative.</para>
@@ -4864,8 +4872,8 @@ namespace MailKit.Net.Imap
 		/// </summary>
 		/// <remarks>
 		/// <para>Gets a substream of the specified message.</para>
-		/// <para>For more information about how to construct the <paramref name="section"/>,
-		/// see Section 6.4.5 of RFC3501.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="section"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <returns>The stream.</returns>
 		/// <param name="index">The index of the message.</param>
@@ -4873,7 +4881,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="section"/> is <c>null</c>.
+		/// <paramref name="section"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="index"/> is out of range.
@@ -4926,8 +4934,8 @@ namespace MailKit.Net.Imap
 		/// </summary>
 		/// <remarks>
 		/// <para>Gets a substream of the specified message.</para>
-		/// <para>For more information about how to construct the <paramref name="section"/>,
-		/// see Section 6.4.5 of RFC3501.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="section"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <returns>The stream.</returns>
 		/// <param name="index">The index of the message.</param>
@@ -4935,7 +4943,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="section"/> is <c>null</c>.
+		/// <paramref name="section"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="index"/> is out of range.
@@ -5025,8 +5033,8 @@ namespace MailKit.Net.Imap
 		/// the end of the specified section of the message, an empty stream is returned. If
 		/// the number of bytes desired extends beyond the end of the section, a truncated
 		/// stream will be returned.</para>
-		/// <para>For more information about how to construct the <paramref name="section"/>,
-		/// see Section 6.4.5 of RFC3501.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="section"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <returns>The stream.</returns>
 		/// <param name="index">The index of the message.</param>
@@ -5036,7 +5044,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="section"/> is <c>null</c>.
+		/// <paramref name="section"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <para><paramref name="index"/> is out of range.</para>
@@ -5100,8 +5108,8 @@ namespace MailKit.Net.Imap
 		/// the end of the specified section of the message, an empty stream is returned. If
 		/// the number of bytes desired extends beyond the end of the section, a truncated
 		/// stream will be returned.</para>
-		/// <para>For more information about how to construct the <paramref name="section"/>,
-		/// see Section 6.4.5 of RFC3501.</para>
+		/// <note type="note">For more information about how to construct the <paramref name="section"/>,
+		/// see <a href="https://www.rfc-editor.org/rfc/rfc3501.html#section-6.4.5">RFC3501, Section 6.4.5</a>.</note>
 		/// </remarks>
 		/// <returns>The stream.</returns>
 		/// <param name="index">The index of the message.</param>
@@ -5111,7 +5119,7 @@ namespace MailKit.Net.Imap
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="section"/> is <c>null</c>.
+		/// <paramref name="section"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <para><paramref name="index"/> is out of range.</para>
@@ -5263,13 +5271,13 @@ namespace MailKit.Net.Imap
 		/// <para>Gets the streams for the specified messages.</para>
 		/// </remarks>
 		/// <param name="uids">The uids of the messages.</param>
-		/// <param name="callback"></param>
+		/// <param name="callback">A callback method that gets called for each stream as it is received.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="uids"/> is <c>null</c>.</para>
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="callback"/> is <c>null</c>.</para>
+		/// <para><paramref name="callback"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// One or more of the <paramref name="uids"/> is invalid.
@@ -5322,13 +5330,13 @@ namespace MailKit.Net.Imap
 		/// </remarks>
 		/// <returns>An awaitable task.</returns>
 		/// <param name="uids">The uids of the messages.</param>
-		/// <param name="callback"></param>
+		/// <param name="callback">A callback method that gets called for each stream as it is received.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="uids"/> is <c>null</c>.</para>
+		/// <para><paramref name="uids"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="callback"/> is <c>null</c>.</para>
+		/// <para><paramref name="callback"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// One or more of the <paramref name="uids"/> is invalid.
@@ -5407,13 +5415,13 @@ namespace MailKit.Net.Imap
 		/// <para>Gets the streams for the specified messages.</para>
 		/// </remarks>
 		/// <param name="indexes">The indexes of the messages.</param>
-		/// <param name="callback"></param>
+		/// <param name="callback">A callback method that gets called for each stream as it is received.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="indexes"/> is <c>null</c>.</para>
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="callback"/> is <c>null</c>.</para>
+		/// <para><paramref name="callback"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// One or more of the <paramref name="indexes"/> is invalid.
@@ -5466,13 +5474,13 @@ namespace MailKit.Net.Imap
 		/// </remarks>
 		/// <returns>An awaitable task.</returns>
 		/// <param name="indexes">The indexes of the messages.</param>
-		/// <param name="callback"></param>
+		/// <param name="callback">A callback method that gets called for each stream as it is received.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="indexes"/> is <c>null</c>.</para>
+		/// <para><paramref name="indexes"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="callback"/> is <c>null</c>.</para>
+		/// <para><paramref name="callback"/> is <see langword="null" />.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentException">
 		/// One or more of the <paramref name="indexes"/> is invalid.
@@ -5552,7 +5560,7 @@ namespace MailKit.Net.Imap
 		/// </remarks>
 		/// <param name="min">The minimum index.</param>
 		/// <param name="max">The maximum index, or <c>-1</c> to specify no upper bound.</param>
-		/// <param name="callback"></param>
+		/// <param name="callback">A callback method that gets called for each stream as it is received.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentOutOfRangeException">
@@ -5561,7 +5569,7 @@ namespace MailKit.Net.Imap
 		/// <para><paramref name="max"/> is out of range.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="callback"/> is <c>null</c>.
+		/// <paramref name="callback"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="ImapClient"/> has been disposed.
@@ -5612,7 +5620,7 @@ namespace MailKit.Net.Imap
 		/// <returns>An awaitable task.</returns>
 		/// <param name="min">The minimum index.</param>
 		/// <param name="max">The maximum index, or <c>-1</c> to specify no upper bound.</param>
-		/// <param name="callback"></param>
+		/// <param name="callback">A callback method that gets called for each stream as it is received.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <param name="progress">The progress reporting mechanism.</param>
 		/// <exception cref="System.ArgumentOutOfRangeException">
@@ -5621,7 +5629,7 @@ namespace MailKit.Net.Imap
 		/// <para><paramref name="max"/> is out of range.</para>
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">
-		/// <paramref name="callback"/> is <c>null</c>.
+		/// <paramref name="callback"/> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="System.ObjectDisposedException">
 		/// The <see cref="ImapClient"/> has been disposed.

@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -68,9 +68,9 @@ namespace MailKit {
 		/// <remarks>
 		/// <para>Gets or sets whether the store operation should run silently.</para>
 		/// <para>Normally, when flags or keywords are changed on a message, a <see cref="IMailFolder.MessageFlagsChanged"/> event is emitted.
-		/// By setting <see cref="Silent"/> to <c>true</c>, this event will not be emitted as a result of this store operation.</para>
+		/// By setting <see cref="Silent"/> to <see langword="true" />, this event will not be emitted as a result of this store operation.</para>
 		/// </remarks>
-		/// <value><c>true</c> if the store operation should run silently (not emitting events for flag changes); otherwise, <c>false</c>.</value>
+		/// <value><see langword="true" /> if the store operation should run silently (not emitting events for flag changes); otherwise, <see langword="false" />.</value>
 		bool Silent { get; set; }
 	}
 }

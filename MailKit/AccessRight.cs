@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -154,8 +154,8 @@ namespace MailKit {
 		/// Determines whether the specified <see cref="MailKit.AccessRight"/> is equal to the current <see cref="MailKit.AccessRight"/>.
 		/// </remarks>
 		/// <param name="other">The <see cref="MailKit.AccessRight"/> to compare with the current <see cref="MailKit.AccessRight"/>.</param>
-		/// <returns><c>true</c> if the specified <see cref="MailKit.AccessRight"/> is equal to the current
-		/// <see cref="MailKit.AccessRight"/>; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the specified <see cref="MailKit.AccessRight"/> is equal to the current
+		/// <see cref="MailKit.AccessRight"/>; otherwise, <see langword="false" />.</returns>
 		public bool Equals (AccessRight other)
 		{
 			return other.Right == Right;
@@ -169,7 +169,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Determines whether two access rights are equal.
 		/// </remarks>
-		/// <returns><c>true</c> if <paramref name="right1"/> and <paramref name="right2"/> are equal; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if <paramref name="right1"/> and <paramref name="right2"/> are equal; otherwise, <see langword="false" />.</returns>
 		/// <param name="right1">The first access right to compare.</param>
 		/// <param name="right2">The second access right to compare.</param>
 		public static bool operator == (AccessRight right1, AccessRight right2)
@@ -183,7 +183,7 @@ namespace MailKit {
 		/// <remarks>
 		/// Determines whether two access rights are not equal.
 		/// </remarks>
-		/// <returns><c>true</c> if <paramref name="right1"/> and <paramref name="right2"/> are not equal; otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if <paramref name="right1"/> and <paramref name="right2"/> are not equal; otherwise, <see langword="false" />.</returns>
 		/// <param name="right1">The first access right to compare.</param>
 		/// <param name="right2">The second access right to compare.</param>
 		public static bool operator != (AccessRight right1, AccessRight right2)
@@ -198,8 +198,8 @@ namespace MailKit {
 		/// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="MailKit.AccessRight"/>.
 		/// </remarks>
 		/// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="MailKit.AccessRight"/>.</param>
-		/// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current <see cref="MailKit.AccessRight"/>;
-		/// otherwise, <c>false</c>.</returns>
+		/// <returns><see langword="true" /> if the specified <see cref="System.Object"/> is equal to the current <see cref="MailKit.AccessRight"/>;
+		/// otherwise, <see langword="false" />.</returns>
 		public override bool Equals (object obj)
 		{
 			return obj is AccessRight right && right.Right == Right;

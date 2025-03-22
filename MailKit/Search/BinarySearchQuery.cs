@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2024 .NET Foundation and Contributors
+// Copyright (c) 2013-2025 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -45,9 +45,9 @@ namespace MailKit.Search {
 		/// <param name="left">The left expression.</param>
 		/// <param name="right">The right expression.</param>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para><paramref name="left"/> is <c>null</c>.</para>
+		/// <para><paramref name="left"/> is <see langword="null" />.</para>
 		/// <para>-or-</para>
-		/// <para><paramref name="right"/> is <c>null</c>.</para>
+		/// <para><paramref name="right"/> is <see langword="null" />.</para>
 		/// </exception>
 		public BinarySearchQuery (SearchTerm term, SearchQuery left, SearchQuery right) : base (term)
 		{
